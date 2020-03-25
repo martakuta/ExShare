@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.mymenu.HomeActivity"
+        android:label="@string/home_title"
+        tools:layout="@layout/activity_home">
+        <action
+            android:id="@+id/action_Home_to_JoinCourse"
+            app:destination="@id/nav_join_course" />
+        <action
+            android:id="@+id/action_Home_to_CreateCourse"
+            app:destination="@id/nav_create_course" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_course1"
+        android:name="com.example.mymenu.Course1Fragment"
+        android:label="@string/course1_title"
+        tools:layout="@layout/fragment_course1" />
+
+    <fragment
+        android:id="@+id/nav_course2"
+        android:name="com.example.mymenu.Course2Fragment"
+        android:label="@string/course2_title"
+        tools:layout="@layout/fragment_course2" />
+
+    <fragment
+        android:id="@+id/nav_course3"
+        android:name="com.example.mymenu.Course3Fragment"
+        android:label="@string/course3_title"
+        tools:layout="@layout/fragment_course3" />
+
+    <fragment
+        android:id="@+id/nav_join_course"
+        android:name="com.example.mymenu.JoinCourse"
+        android:label="@string/join_course_title"
+        tools:layout="@layout/activity_join_course" />
+
+    <fragment
+        android:id="@+id/nav_create_course"
+        android:name="com.example.mymenu.CreateCourse"
+        android:label="@string/create_course_title"
+        tools:layout="@layout/activity_create_course" />
+
+</navigation>
