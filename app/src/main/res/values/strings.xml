@@ -18,4 +18,14 @@
 
     <string name="create_course_name_place"> </string>
     <string name="create_course_name_label">Nazwij swój kurs:</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Hasło</string>
+    <string name="login_zaloguj">Zaloguj się</string>
+    <string name="login_zarejestruj">Zarejestruj się</string>
+
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="incorrect_login">\"Email lub hasło są nieprawidłowe.\"</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.mymenu;
+package com.example.exshare;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.mymenu", appContext.getPackageName());
+        assertEquals("com.example.exshare.mymenu", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mymenu;
+package com.example.exshare;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

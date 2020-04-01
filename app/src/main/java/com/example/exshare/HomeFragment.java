@@ -1,4 +1,4 @@
-package com.example.mymenu;
+package com.example.exshare;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-public class HomeActivity extends Fragment {
+public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class HomeActivity extends Fragment {
         view.findViewById(R.id.join_course_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(HomeActivity.this)
+                NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_Home_to_JoinCourse);
 
             }
@@ -32,7 +32,7 @@ public class HomeActivity extends Fragment {
         view.findViewById(R.id.create_course_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(HomeActivity.this)
+                NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_Home_to_CreateCourse);
 
             }
