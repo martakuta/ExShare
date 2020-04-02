@@ -1,4 +1,4 @@
-package com.example.exshare;
+package pl.edu.mimuw.exshare;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -7,14 +7,14 @@
 
     <!--<fragment
         android:id="@+id/nav_login"
-        android:name="com.example.exshare.LoginActivity"
+        android:name="pl.edu.mimuw.exshare.LoginActivity"
         android:label="@string/login_zaloguj"
         tools:layout="@layout/activity_login">
     </fragment>-->
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.exshare.HomeFragment"
+        android:name="pl.edu.mimuw.exshare.HomeFragment"
         android:label="@string/home_title"
         tools:layout="@layout/activity_home">
         <action
@@ -27,31 +27,31 @@
 
     <fragment
         android:id="@+id/nav_course1"
-        android:name="com.example.exshare.Course1Fragment"
+        android:name="pl.edu.mimuw.exshare.Course1Fragment"
         android:label="@string/course1_title"
         tools:layout="@layout/fragment_course1" />
 
     <fragment
         android:id="@+id/nav_course2"
-        android:name="com.example.exshare.Course2Fragment"
+        android:name="pl.edu.mimuw.exshare.Course2Fragment"
         android:label="@string/course2_title"
         tools:layout="@layout/fragment_course2" />
 
     <fragment
         android:id="@+id/nav_course3"
-        android:name="com.example.exshare.Course3Fragment"
+        android:name="pl.edu.mimuw.exshare.Course3Fragment"
         android:label="@string/course3_title"
         tools:layout="@layout/fragment_course3" />
 
     <fragment
         android:id="@+id/nav_join_course"
-        android:name="com.example.exshare.JoinCourseFragment"
+        android:name="pl.edu.mimuw.exshare.JoinCourseFragment"
         android:label="@string/join_course_title"
         tools:layout="@layout/activity_join_course" />
 
     <fragment
         android:id="@+id/nav_create_course"
-        android:name="com.example.exshare.CreateCourseFragment"
+        android:name="pl.edu.mimuw.exshare.CreateCourseFragment"
         android:label="@string/create_course_title"
         tools:layout="@layout/activity_create_course" />
 

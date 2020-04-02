@@ -1,4 +1,4 @@
-package com.example.exshare;
+package pl.edu.mimuw.exshare;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class CreateCourseFragment extends Fragment {
+public class JoinCourseFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.activity_create_course, container, false);
+        return inflater.inflate(R.layout.activity_join_course, container, false);
     }
 }
-
