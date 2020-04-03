@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "296356695932",
+    "firebase_url": "https://exshare-1585853870941.firebaseio.com",
+    "project_id": "exshare-1585853870941",
+    "storage_bucket": "exshare-1585853870941.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296356695932:android:0023f50344b70d5d699ef9",
+        "android_client_info": {
+          "package_name": "pl.edu.mimuw.exshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296356695932-d0cm42fle93p8grh031o3rkvg8347mbh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pl.edu.mimuw.exshare",
+            "certificate_hash": "099133c624d0d862e3a9ae350887df4e794c8afe"
+          }
+        },
+        {
+          "client_id": "296356695932-riaehj8tg2caougogtdnig2arqd4i59q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-vptPXU1xb74Zp_W3LzOn6n_dKAA5O64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296356695932-riaehj8tg2caougogtdnig2arqd4i59q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
