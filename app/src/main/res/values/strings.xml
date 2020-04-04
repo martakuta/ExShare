@@ -7,6 +7,7 @@
     <string name="course3_title">Kurs 3</string>
     <string name="join_course_title">Dołącz do kursu</string>
     <string name="create_course_title">Stwórz nowy kurs</string>
+    <string name="sign_out_text">Wyloguj się</string>
 
     <string name="menu_header">ExShare</string>
 
@@ -21,6 +22,7 @@
     <string name="login_email">Email</string>
     <string name="login_password">Hasło</string>
     <string name="login_zaloguj">Zaloguj się</string>
+    <string name="google_sign_in">Sign in with Google</string>
     <string name="login_zarejestruj">Zarejestruj się</string>
 
     <string name="welcome">"Welcome !"</string>
