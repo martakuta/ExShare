@@ -41,24 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final TextView name1 = findViewById(R.id.login_hello1_text);
         final TextView name2 = findViewById(R.id.login_hello2_text);
-        final EditText email = findViewById(R.id.sign_in_email);
-        final EditText password = findViewById(R.id.sign_in_password);
-        Button buttonLogin = findViewById(R.id.sign_in_button);
         final TextView incorrectLogin = findViewById(R.id.incorrect_login);
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (usersBase.validate(
-                        email.getText().toString(),
-                        password.getText().toString())) {
-                    logIn(new UserData(email.getText().toString(),"Test Imię", "test_id"));
-                }
-                else {
-                    incorrectLogin.setText("Niepoprawny email lub hasło.");
-                }
-            }
-        });
 
 
         mAuth=FirebaseAuth.getInstance();
