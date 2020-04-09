@@ -5,4 +5,6 @@
     <color name="myDarkBlue">#0077b3</color>
     <color name="myVeryDarkBlue">#003d66</color>
     <color name="myYellow">#ffcc00</color>
+    <color name="myBackgroundWhite">#fafafa</color>
+    <color name="myWhite">#ffffff</color>
 </resources>
