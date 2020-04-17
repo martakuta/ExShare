@@ -1,5 +1,6 @@
 package pl.edu.mimuw.exshare;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,10 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
-    private UsersBase usersBase;
+
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     SignInButton google_sign_in;
+
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
         Toast.makeText(this, "Signed in as " + data.getName(), Toast.LENGTH_SHORT).show();
@@ -36,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        usersBase = new UsersBase();
 
         final TextView name1 = findViewById(R.id.login_hello1_text);
         final TextView name2 = findViewById(R.id.login_hello2_text);
@@ -83,15 +83,17 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            if (account != null) {
-                Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
-                logIn(new UserData(account.getDisplayName(),account.getEmail(), account.getId()));
-            }
-            else {
-                Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
-            }
+                if (account != null) {
+                    if (DBAccess.userExists(account.getId()) == 0) {
+                        DBAccess.addUser(account.getId());
+                    }
+                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                    logIn(new UserData(account.getDisplayName(),account.getEmail(), account.getId()));
+                }
+                else {
+                    Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
+                }
 
         } catch (ApiException e) {
             Toast.makeText(this, "signInResult:failed code=" + e.getStatusCode(), Toast.LENGTH_SHORT).show();
@@ -112,6 +114,10 @@ public class LoginActivity extends AppCompatActivity {
         if(account==null)
             Toast.makeText(this, "Please Sign in", Toast.LENGTH_SHORT).show();
         if(account!=null) {
+            if (DBAccess.userExists(account.getId()) != 1) {
+                //TODO: Log-in error. User absent in database.
+                DBAccess.addUser(account.getId());
+            }
             logIn(new UserData(account.getDisplayName(),account.getEmail(),account.getId()));
         }
     }
