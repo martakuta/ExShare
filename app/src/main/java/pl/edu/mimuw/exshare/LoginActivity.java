@@ -31,8 +31,16 @@ public class LoginActivity extends AppCompatActivity {
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
         Toast.makeText(this, "Signed in as " + data.getName(), Toast.LENGTH_SHORT).show();
+        Log.i("Login","Signed user id: " + data.getId());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+        Bundle b = new Bundle();
+        b.putString("user_id", data.getId());
+        b.putString("user_name", data.getName());
+        b.putString("user_mail", data.getMail());
+        intent.putExtras(b);
         startActivity(intent);
+        finish();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
                 if (account != null) {
                     if (DBAccess.userExists(account.getId()) == 0) {
+                        Log.i("DB", "User " + account.getId() + " is missing. Adding");
                         DBAccess.addUser(account.getId());
                     }
                     Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();

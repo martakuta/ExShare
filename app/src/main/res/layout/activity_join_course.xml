@@ -35,4 +35,21 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/join_course_label" />
+
+    <Button
+        android:id="@+id/sign_to_course_button"
+        android:layout_width="205dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/myYellow"
+        android:gravity="center"
+        android:text="@string/join_course_title"
+        android:textColor="@color/myDarkBlue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/join_course_place"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
