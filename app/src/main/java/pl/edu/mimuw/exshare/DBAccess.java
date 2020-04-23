@@ -10,10 +10,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class DBAccess {
+class DBAccess {
 
+    /**
+     * Runnable class for adding user functionality.
+     */
     private static class AddUserRunnable implements Runnable {
         private String userId;
+        private boolean success = false;
 
         @Override
         public void run() {
@@ -25,7 +29,9 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                System.out.println("Resp code: " + response.code());
+                if (response.code() == 200) {
+                    success = true;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -34,18 +40,34 @@ public class DBAccess {
         AddUserRunnable(String userId) {
             this.userId = userId;
         }
+
+        boolean isSuccess() {
+            boolean res = success;
+            success = false;
+            return res;
+        }
     }
 
-    static void addUser(String userId) {
-        Thread t = new Thread(new AddUserRunnable(userId));
+    /**
+     * Creates new thread running @see AddUserRunnable.
+     * @param userId User identifier.
+     * @return true if adding succeeded, false otherwise.
+     */
+    static boolean addUser(String userId) {
+        AddUserRunnable runnable = new AddUserRunnable(userId);
+        Thread t = new Thread(runnable);
         t.start();
         try {
             t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return runnable.isSuccess();
     }
 
+    /**
+     * Runnable class for adding user presence in database.
+     */
     private static class UserExistsRunnable implements Runnable {
         String userId;
         int exists; //1 - true, 0 - false, 2 - error
@@ -59,13 +81,12 @@ public class DBAccess {
             try {
                 Response response = httpClient.newCall(request).execute();
                 if (response.code() != 200 || response.body() == null) {
-                    //System.out.println("Resp code:  " + response.code());
                     exists = 2;
                 } else {
                     String respBodyString = response.body().string();
                     if (respBodyString.equals("false")) {
                         exists = 0;
-                    } else if (respBodyString.equals("true")){
+                    } else if (respBodyString.equals("true")) {
                         exists = 1;
                     } else {
                         exists = 2;
@@ -86,6 +107,10 @@ public class DBAccess {
         }
     }
 
+    /**
+     * @param userId User identifier.
+     * @return 0 - user does not exists, 1 - user exists, 2 - error in request.
+     */
     static int userExists(String userId) {
         UserExistsRunnable runnable = new UserExistsRunnable(userId);
         Thread t = new Thread(runnable);
@@ -95,10 +120,12 @@ public class DBAccess {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         return runnable.getExists();
     }
 
+    /**
+     * Assigning user to course runnable.
+     */
     private static class AssignUserToCourseRunnable implements Runnable {
         String userId;
         int courseId;
@@ -125,6 +152,11 @@ public class DBAccess {
         }
     }
 
+    /**
+     * Assigns user to course using another thread and waits for result.
+     * @param userId User identifier.
+     * @param courseId Course identifier.
+     */
     static void assignUserToCourse(String userId, int courseId) {
         Thread t = new Thread(new AssignUserToCourseRunnable(userId, courseId));
         t.start();
@@ -135,6 +167,9 @@ public class DBAccess {
         }
     }
 
+    /**
+     * Runnable for getting user's courses.
+     */
     private static class GetUserCoursesRunnable implements Runnable {
         private String userId;
         private JSONArray result;
@@ -147,8 +182,12 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                result = new JSONArray(response.body().string());
-            } catch (IOException | JSONException | NullPointerException e) {
+                if (response.body() != null) {
+                    result = new JSONArray(response.body().string());
+                } else {
+                    result = null;
+                }
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -163,6 +202,10 @@ public class DBAccess {
         }
     }
 
+    /**
+     * @param userId User identifier.
+     * @return @see JSONArray with user courses identifiers.
+     */
     static JSONArray getUserCourses(String userId) {
         GetUserCoursesRunnable runnable = new GetUserCoursesRunnable(userId);
         Thread t = new Thread(runnable);
