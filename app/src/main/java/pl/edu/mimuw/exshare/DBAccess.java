@@ -28,10 +28,8 @@ class DBAccess {
                     .url("http://exshare.herokuapp.com/addUser/" + userId)
                     .build();
             try {
-                Response response = httpClient.newCall(request).execute();
-                if (response.code() == 200) {
-                    success = true;
-                }
+                httpClient.newCall(request).execute();
+                success = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }

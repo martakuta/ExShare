@@ -89,9 +89,12 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
                 }
             } else {
-                Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
             }
 
         } catch (ApiException e) {
