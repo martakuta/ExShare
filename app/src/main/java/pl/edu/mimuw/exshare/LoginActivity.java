@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
 
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         final TextView incorrectLogin = findViewById(R.id.incorrect_login);
 
 
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         // Tworzę GoogleSignInOptions Objekt
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -56,10 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         google_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.google_sign_in:
-                        signIn();
-                        break;
+                if (view.getId() == R.id.google_sign_in) {
+                    signIn();
                 }
             }
         });
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,28 +82,32 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-                if (account != null) {
-                    if (DBAccess.userExists(account.getId()) == 0) {
-                        DBAccess.addUser(account.getId());
+            if (account != null) {
+                if (DBAccess.userExists(account.getId()) == 0) {
+                    if (DBAccess.addUser(account.getId())) {
+                        Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                        logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+                    } else {
+                        Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
-                    logIn(new UserData(account.getDisplayName(),account.getEmail(), account.getId()));
                 }
-                else {
-                    Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
+            }
 
         } catch (ApiException e) {
             Toast.makeText(this, "signInResult:failed code=" + e.getStatusCode(), Toast.LENGTH_SHORT).show();
             Log.w("Sign in Error", "signInResult:failed code=" + e.getStatusCode());
-            // TODO:: przyda się jakaś wspołna funkcja do obsługi błędnych prób loginu
+            //TODO:: przyda się jakaś wspołna funkcja do obsługi błędnych prób loginu
             final TextView incorrectLogin = findViewById(R.id.incorrect_login);
             incorrectLogin.setText("Błąd przy logowaniu z Google");
         }
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -111,25 +116,34 @@ public class LoginActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
         // Już jest zalowogany przez Google
-        if(account==null)
+        if (account == null)
             Toast.makeText(this, "Please Sign in", Toast.LENGTH_SHORT).show();
-        if(account!=null) {
-            if (DBAccess.userExists(account.getId()) != 1) {
-                //TODO: Log-in error. User absent in database.
-                DBAccess.addUser(account.getId());
+        if (account != null) {
+            if (DBAccess.userExists(account.getId()) == 0) {
+                if (DBAccess.addUser(account.getId())) {
+                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+                } else {
+                    Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
             }
-            logIn(new UserData(account.getDisplayName(),account.getEmail(),account.getId()));
         }
     }
+
     // TODO:: funkcja dla wylogowania się
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, task -> changeToLoginUI()); {}
+                .addOnCompleteListener(this, task -> changeToLoginUI());
+        {
+        }
     }
+
     private void changeToLoginUI() {
         setContentView(R.layout.activity_login);
     }
-
 }
 
