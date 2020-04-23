@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
-        Toast.makeText(this, "Signed in as " + data.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Zalogowano jako " + data.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
@@ -84,17 +84,17 @@ public class LoginActivity extends AppCompatActivity {
             if (account != null) {
                 if (DBAccess.userExists(account.getId()) == 0) {
                     if (DBAccess.addUser(account.getId())) {
-                        Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
                         logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
                     } else {
-                        Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
                     logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
                 }
             } else {
-                Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
             }
 
         } catch (ApiException e) {
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.w("Sign in Error", "signInResult:failed code=" + e.getStatusCode());
             //TODO:: przyda się jakaś wspołna funkcja do obsługi błędnych prób loginu
             final TextView incorrectLogin = findViewById(R.id.incorrect_login);
-            incorrectLogin.setText("Błąd przy logowaniu z Google");
+            incorrectLogin.setText("Błąd podczas logowania z Google");
         }
     }
 
@@ -115,17 +115,17 @@ public class LoginActivity extends AppCompatActivity {
 
         // Już jest zalowogany przez Google
         if (account == null)
-            Toast.makeText(this, "Please Sign in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Zaloguj się, aby dołączyć", Toast.LENGTH_SHORT).show();
         if (account != null) {
             if (DBAccess.userExists(account.getId()) == 0) {
                 if (DBAccess.addUser(account.getId())) {
-                    Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
                     logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
                 } else {
-                    Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Sign in success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
                 logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
             }
         }
