@@ -4,34 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.mimuw.exshare.LoginActivity">
+    tools:context="pl.edu.mimuw.exshare.LoginActivity"
+    android:background="@drawable/exshare_background_screen">
 
     <TextView
         android:id="@+id/login_hello1_text"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="310dp"
         android:layout_marginBottom="40dp"
         android:gravity="center"
         android:text="@string/home_hello1"
-        android:textColor="@color/myMiddleBlue"
-        android:textSize="30sp"
+        android:textColor="@color/myWhite"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/login_hello2_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/login_hello2_text"
-        android:layout_width="240dp"
-        android:layout_height="45dp"
+        android:layout_width="271dp"
+        android:layout_height="46dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="@string/home_hello2"
         android:textColor="@color/myVeryDarkBlue"
-        android:textSize="17sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/google_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -40,19 +41,17 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_sign_in"
-        android:layout_width="158dp"
-        android:layout_height="46dp"
-
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="50dp"
-        android:background="@color/myYellow"
         android:gravity="center"
         android:text="@string/google_sign_in"
         android:textColor="@color/myDarkBlue"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/incorrect_login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_hello2_text" />
 
