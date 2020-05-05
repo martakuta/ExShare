@@ -5,54 +5,56 @@
     android:id="@+id/nav_graph"
     app:startDestination="@+id/nav_home">
 
-    <!--<fragment
-        android:id="@+id/nav_login"
-        android:name="pl.edu.mimuw.exshare.LoginActivity"
-        android:label="@string/login_zaloguj"
-        tools:layout="@layout/activity_login">
-    </fragment>-->
-
     <fragment
         android:id="@+id/nav_home"
         android:name="pl.edu.mimuw.exshare.HomeFragment"
         android:label="@string/home_title"
-        tools:layout="@layout/activity_home">
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_Home_to_JoinCourse"
             app:destination="@id/nav_join_course" />
         <action
             android:id="@+id/action_Home_to_CreateCourse"
             app:destination="@id/nav_create_course" />
+        <action
+            android:id="@+id/action_Home_to_YourCourses"
+            app:destination="@id/nav_your_courses" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_course1"
-        android:name="pl.edu.mimuw.exshare.Course1Fragment"
-        android:label="@string/course1_title"
-        tools:layout="@layout/fragment_course1" />
-
-    <fragment
-        android:id="@+id/nav_course2"
-        android:name="pl.edu.mimuw.exshare.Course2Fragment"
-        android:label="@string/course2_title"
-        tools:layout="@layout/fragment_course2" />
-
-    <fragment
-        android:id="@+id/nav_course3"
-        android:name="pl.edu.mimuw.exshare.Course3Fragment"
-        android:label="@string/course3_title"
-        tools:layout="@layout/fragment_course3" />
+        android:id="@+id/nav_course"
+        android:name="pl.edu.mimuw.exshare.CourseFragment"
+        android:label="@string/course_title"
+        tools:layout="@layout/fragment_course" />
 
     <fragment
         android:id="@+id/nav_join_course"
         android:name="pl.edu.mimuw.exshare.JoinCourseFragment"
         android:label="@string/join_course_title"
-        tools:layout="@layout/activity_join_course" />
+        tools:layout="@layout/fragment_join_course">
+        <action
+            android:id="@+id/action_JoinCourse_to_Course"
+            app:destination="@id/nav_course" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_create_course"
         android:name="pl.edu.mimuw.exshare.CreateCourseFragment"
         android:label="@string/create_course_title"
-        tools:layout="@layout/activity_create_course" />
+        tools:layout="@layout/fragment_create_course">
+        <action
+            android:id="@+id/action_CreateCourse_to_Course"
+            app:destination="@id/nav_course" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_your_courses"
+        android:name="pl.edu.mimuw.exshare.YourCoursesFragment"
+        android:label="@string/your_courses_title"
+        tools:layout="@layout/fragment_your_courses">
+        <action
+            android:id="@+id/action_YourCourses_to_Course"
+            app:destination="@id/nav_course" />
+    </fragment>
 
 </navigation>

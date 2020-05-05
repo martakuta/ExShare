@@ -27,7 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
         Toast.makeText(this, "Zalogowano jako " + data.getName(), Toast.LENGTH_SHORT).show();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userID",data.getId());
+        bundle.putString("userName", data.getName());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -100,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (ApiException e) {
             Toast.makeText(this, "signInResult:failed code=" + e.getStatusCode(), Toast.LENGTH_SHORT).show();
             Log.w("Sign in Error", "signInResult:failed code=" + e.getStatusCode());
-            //TODO:: przyda się jakaś wspołna funkcja do obsługi błędnych prób loginu
+            //TODO:: przyda się jakaś wspolna funkcja do obsługi błędnych prób loginu
             final TextView incorrectLogin = findViewById(R.id.incorrect_login);
             incorrectLogin.setText("Błąd podczas logowania z Google");
         }

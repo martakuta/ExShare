@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-    useLibrary  'org.apache.http.legacy'
+    useLibrary 'org.apache.http.legacy'
 
 
     defaultConfig {
@@ -49,5 +49,3 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
 }
 apply plugin: 'com.google.gms.google-services'
-
-

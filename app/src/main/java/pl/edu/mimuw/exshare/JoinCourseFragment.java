@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 public class JoinCourseFragment extends Fragment {
 
@@ -19,7 +20,7 @@ public class JoinCourseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.activity_join_course, container, false);
+        return inflater.inflate(R.layout.fragment_join_course, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class JoinCourseFragment extends Fragment {
 
         Bundle b = requireActivity().getIntent().getExtras();
         if(b != null)
-            userID = b.getString("user_id");
+            userID = b.getString("userID");
         course=view.findViewById(R.id.join_course_place);
         Button sign_to_course_button=view.findViewById(R.id.sign_to_course_button);
         sign_to_course_button.setOnClickListener(new View.OnClickListener() {
@@ -36,13 +37,15 @@ public class JoinCourseFragment extends Fragment {
             public void onClick(View v) {
                 Log.i("Adder","Course added");
                 int courseID = Integer.parseInt(course.getText().toString());
+                // TODO:: sprawdzic czy kurs o takim ID istnieje, a dopiero jesli tak, to dolaczac
                 DBAccess.assignUserToCourse(userID,courseID);
-                joinedToCourse();
+                ((MainActivity)getActivity()).setPresentCourseID(courseID);
+                Toast.makeText(getActivity(), "Zarejestrowany do kursu", Toast.LENGTH_LONG).show();
+
+                NavHostFragment.findNavController(JoinCourseFragment.this)
+                        .navigate(R.id.action_JoinCourse_to_Course);
 
             }
         });
-    }
-    private void joinedToCourse() {
-        Toast.makeText(getActivity(), "Zarejestrowany do kursu", Toast.LENGTH_LONG).show();
     }
 }

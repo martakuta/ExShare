@@ -1,7 +1,7 @@
 package pl.edu.mimuw.exshare;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,38 +13,46 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 
+
 public class MainActivity extends AppCompatActivity {
     UserData userData;
     private AppBarConfiguration mAppBarConfiguration;
+    private static int presentCourseID = 0;
 
+    public int getPresentCourseID() {
+        return presentCourseID;
+    }
+
+    public void setPresentCourseID(int newID) {
+        presentCourseID = newID;
+    }
+
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar); //toolbar
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout); //ogolny widok calego wysunietego menu
-        NavigationView navigationView = findViewById(R.id.nav_view); //samo wysuwane menu
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_course1, R.id.nav_course2, R.id.nav_course3) //poszczegolne pozycje menu
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment); //chyba białe tło
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            userData = new UserData(acct.getDisplayName(), acct.getEmail(), acct.getId());
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            userData = new UserData(account.getDisplayName(), account.getEmail(), account.getId());
+        } else {
+            // TODO:: jakiś wyjątek że nie istnieje konto
         }
 
-    }
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home,
+                R.id.nav_your_courses, R.id.nav_join_course, R.id.nav_create_course)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

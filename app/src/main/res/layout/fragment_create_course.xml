@@ -4,52 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JoinCourseFragment">
+    tools:context=".CreateCourseFragment">
 
     <TextView
-        android:id="@+id/join_course_label"
+        android:id="@+id/create_course_label"
         android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:gravity="center"
-        android:text="@string/enter_course_code_label"
+        android:text="@string/create_course_name_label"
         android:textColor="@color/myMiddleBlue"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/join_course_place"
+        app:layout_constraintBottom_toTopOf="@+id/create_course_place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/join_course_place"
+        android:id="@+id/create_course_place"
         android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="170dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/enter_course_code_place"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/create_course_name_place"
+        app:layout_constraintBottom_toTopOf="@+id/create_new_course_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/join_course_label" />
+        app:layout_constraintTop_toBottomOf="@+id/create_course_label" />
 
     <Button
-        android:id="@+id/sign_to_course_button"
+        android:id="@+id/create_new_course_button"
         android:layout_width="205dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
         android:background="@color/myYellow"
         android:gravity="center"
-        android:text="@string/join_course_title"
+        android:text="@string/create_course_title"
         android:textColor="@color/myDarkBlue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/join_course_place"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/create_course_place" />
 </androidx.constraintlayout.widget.ConstraintLayout>

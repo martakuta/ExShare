@@ -139,6 +139,7 @@ class DBAccess {
             try {
                 Response response = httpClient.newCall(request).execute();
                 System.out.println("Resp code: " + response.code());
+                System.out.println("Resp msg: " + response.message() + response.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
