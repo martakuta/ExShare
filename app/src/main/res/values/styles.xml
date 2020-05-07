@@ -26,4 +26,5 @@
          <item name="drawerArrowStyle">@style/DrawerArrowStyle</item> -->
     </style>
 
+    <item name="menu_course_group" type="id" />
 </resources>

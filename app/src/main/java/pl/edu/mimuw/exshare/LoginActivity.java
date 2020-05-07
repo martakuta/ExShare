@@ -27,7 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
         Toast.makeText(this, "Zalogowano jako " + data.getName(), Toast.LENGTH_SHORT).show();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userID",data.getId());
+        bundle.putString("userName", data.getName());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -81,18 +86,9 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            if (account != null) {
-                if (DBAccess.userExists(account.getId()) == 0) {
-                    if (DBAccess.addUser(account.getId())) {
-                        Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                        logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                    } else {
-                        Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                }
+            if (account != null && DBAccess.addUser(account.getId())) {
+                Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
+                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
             } else {
                 Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
             }
@@ -100,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (ApiException e) {
             Toast.makeText(this, "signInResult:failed code=" + e.getStatusCode(), Toast.LENGTH_SHORT).show();
             Log.w("Sign in Error", "signInResult:failed code=" + e.getStatusCode());
-            //TODO:: przyda się jakaś wspołna funkcja do obsługi błędnych prób loginu
+            //TODO:: przyda się jakaś wspolna funkcja do obsługi błędnych prób loginu
             final TextView incorrectLogin = findViewById(R.id.incorrect_login);
             incorrectLogin.setText("Błąd podczas logowania z Google");
         }
@@ -116,18 +112,11 @@ public class LoginActivity extends AppCompatActivity {
         // Już jest zalowogany przez Google
         if (account == null)
             Toast.makeText(this, "Zaloguj się, aby dołączyć", Toast.LENGTH_SHORT).show();
-        if (account != null) {
-            if (DBAccess.userExists(account.getId()) == 0) {
-                if (DBAccess.addUser(account.getId())) {
-                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                } else {
-                    Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-            }
+        if (account != null && DBAccess.addUser(account.getId())) {
+            Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
+            logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+        } else if (account != null) {
+            Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
         }
     }
 

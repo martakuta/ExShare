@@ -2,11 +2,10 @@
     <string name="app_name">ExShare</string>
 
     <string name="home_title"><b>Start</b></string>
-    <string name="course1_title">Kurs 1</string>
-    <string name="course2_title">Kurs 2</string>
-    <string name="course3_title">Kurs 3</string>
+    <string name="course_title">Kurs</string>
     <string name="join_course_title">Dołącz do kursu</string>
     <string name="create_course_title">Stwórz nowy kurs</string>
+    <string name="your_courses_title">Twoje kursy</string>
     <string name="sign_out_text">Wyloguj się</string>
 
     <string name="menu_header">ExShare</string>
@@ -16,7 +15,7 @@
 
     <string name="enter_course_code_place"> </string>
     <string name="enter_course_code_label">Wpisz kod kursu:</string>
-
+    <string name="course_fragment_hello">Witaj na kursie!</string>
     <string name="create_course_name_place"> </string>
     <string name="create_course_name_label">Nazwij swój kurs:</string>
     <string name="login_email">Email</string>
@@ -30,4 +29,7 @@
     <string name="invalid_password">Hasło musi mieć >5 znaków</string>
     <string name="login_failed">"Logowanie nie powiodło się"</string>
     <string name="incorrect_login">"Email lub hasło są nieprawidłowe."</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

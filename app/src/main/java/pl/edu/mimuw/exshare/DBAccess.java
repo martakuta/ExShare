@@ -127,6 +127,7 @@ class DBAccess {
     private static class AssignUserToCourseRunnable implements Runnable {
         String userId;
         int courseId;
+        int result;
 
         @Override
         public void run() {
@@ -138,15 +139,28 @@ class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                System.out.println("Resp code: " + response.code());
+                if (response.code() != 200) {
+                    if (response.message().equals("No such course")) {
+                        result = 0;
+                    } else {
+                        result = -1;
+                    }
+                } else {
+                    result = 1;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
+        public int getResult() {
+            return result;
+        }
+
         AssignUserToCourseRunnable(String userId, int courseId) {
             this.userId = userId;
             this.courseId = courseId;
+            result = -1;
         }
     }
 
@@ -154,15 +168,18 @@ class DBAccess {
      * Assigns user to course using another thread and waits for result.
      * @param userId User identifier.
      * @param courseId Course identifier.
+     * @return -1 in case of failure. 0 in case of non-existent course assignment, 1 on success.
      */
-    static void assignUserToCourse(String userId, int courseId) {
-        Thread t = new Thread(new AssignUserToCourseRunnable(userId, courseId));
+    static int assignUserToCourse(String userId, int courseId) {
+        AssignUserToCourseRunnable runnable = new AssignUserToCourseRunnable(userId, courseId);
+        Thread t = new Thread(runnable);
         t.start();
         try {
             t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return runnable.getResult();
     }
 
     /**
@@ -214,6 +231,62 @@ class DBAccess {
             e.printStackTrace();
         }
 
+        return runnable.getResult();
+    }
+
+    /**
+     * Runnable for getting new course identifier.
+     */
+    private static class GetNewCourseRunnable implements Runnable {
+        private String userId;
+        private String courseName;
+        private int result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getNewCourse/" + userId + "/" + courseName)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.body() != null && response.code() == 200) {
+                    result = Integer.parseInt(response.body().string());
+                } else {
+                    result = -1;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        GetNewCourseRunnable(String userId, String courseName) {
+            this.userId = userId;
+            this.courseName = courseName;
+            result = -1;
+        }
+
+        int getResult() {
+            int res =  result;
+            result = -1;
+            return res;
+        }
+    }
+
+    /**
+     * @param userId User identifier.
+     * @param courseName Created course name.
+     * @return Integer with new course identifier. -1 in case of failure.
+     */
+    static int getNewCourse(String userId, String courseName) {
+        GetNewCourseRunnable runnable = new GetNewCourseRunnable(userId, courseName);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return runnable.getResult();
     }
 }

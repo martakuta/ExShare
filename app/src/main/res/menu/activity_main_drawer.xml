@@ -3,23 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/my_menu_group"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="@string/home_title" />
         <item
-            android:id="@+id/nav_course1"
-            android:icon="@drawable/ic_folder"
-            android:title="@string/course1_title" />
+            android:id="@+id/nav_your_courses"
+            android:icon="@drawable/ic_collection"
+            android:title="@string/your_courses_title" />
         <item
-            android:id="@+id/nav_course2"
-            android:icon="@drawable/ic_folder"
-            android:title="@string/course2_title" />
+            android:id="@+id/nav_join_course"
+            android:icon="@drawable/ic_add"
+            android:title="@string/join_course_title" />
         <item
-            android:id="@+id/nav_course3"
-            android:icon="@drawable/ic_folder"
-            android:title="@string/course3_title" />
+            android:id="@+id/nav_create_course"
+            android:icon="@drawable/ic_add"
+            android:title="@string/create_course_title" />
+
     </group>
 </menu>
 
