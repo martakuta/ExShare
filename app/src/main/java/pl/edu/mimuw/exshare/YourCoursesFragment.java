@@ -49,10 +49,11 @@ public class YourCoursesFragment extends Fragment {
                 System.out.println("kurs: " + courseID + " " + courseName);
 
                 Button btn = new Button(getActivity());
-                btn.setText(String.valueOf(courseID));
+                btn.setText(courseName);
                 btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myMiddleBlue));
                 btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
                 btn.setTextSize(17);
+                btn.setContentDescription(String.valueOf(courseID));
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -62,14 +63,14 @@ public class YourCoursesFragment extends Fragment {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String courseIDString = btn.getText().toString();
+                        String courseIDString = btn.getContentDescription().toString();
                         int courseIDInteger = Integer.parseInt(courseIDString);
+                        System.out.println("Go to course " + courseIDString);
 
                         ((MainActivity) requireActivity()).setPresentCourseID(courseIDInteger);
 
                         NavHostFragment.findNavController(YourCoursesFragment.this)
                                 .navigate(R.id.action_YourCourses_to_Course);
-                        System.out.println("Go to course " + courseIDString + " " + courseName);
                     }
                 });
                 linearLayout.addView(btn);
