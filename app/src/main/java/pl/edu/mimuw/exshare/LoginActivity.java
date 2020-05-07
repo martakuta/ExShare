@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, "Zalogowano jako " + data.getName(), Toast.LENGTH_SHORT).show();
 
         Bundle bundle = new Bundle();
-        bundle.putString("userID",data.getId());
+        bundle.putString("userID", data.getId());
         bundle.putString("userName", data.getName());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtras(bundle);
@@ -44,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         final TextView name1 = findViewById(R.id.login_hello1_text);
         final TextView name2 = findViewById(R.id.login_hello2_text);
         final TextView incorrectLogin = findViewById(R.id.incorrect_login);
-
 
         mAuth = FirebaseAuth.getInstance();
         // Tworzę GoogleSignInOptions Objekt

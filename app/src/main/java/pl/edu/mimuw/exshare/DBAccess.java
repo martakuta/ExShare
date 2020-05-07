@@ -289,4 +289,57 @@ class DBAccess {
         }
         return runnable.getResult();
     }
+
+    /**
+     * Runnable for getting course name.
+     */
+    private static class GetCourseNameRunnable implements Runnable {
+        private int courseId;
+        private String result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getCourseName/" + courseId)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = response.body().string();
+                } else {
+                    result = null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        GetCourseNameRunnable(int courseId) {
+            this.courseId = courseId;
+            this.result = null;
+        }
+
+        String getResult() {
+            String res =  result;
+            result = null;
+            return res;
+        }
+    }
+
+    /**
+     * @param courseId Course identifier.
+     * @return Course name. Null if there is no such course.
+     */
+    static String getCourseName(int courseId) {
+        GetCourseNameRunnable runnable = new GetCourseNameRunnable(courseId);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
 }

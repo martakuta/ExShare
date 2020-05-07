@@ -1,13 +1,11 @@
 package pl.edu.mimuw.exshare;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +15,7 @@ public class JoinCourseFragment extends Fragment {
 
     private String userID;
     private EditText course;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -28,22 +27,18 @@ public class JoinCourseFragment extends Fragment {
 
 
         Bundle b = requireActivity().getIntent().getExtras();
-        if(b != null)
+        if (b != null)
             userID = b.getString("userID");
-        course=view.findViewById(R.id.join_course_place);
-        Button sign_to_course_button=view.findViewById(R.id.sign_to_course_button);
+        course = view.findViewById(R.id.join_course_place);
+        Button sign_to_course_button = view.findViewById(R.id.sign_to_course_button);
         sign_to_course_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Adder","Course added");
                 int courseID = Integer.parseInt(course.getText().toString());
-                // TODO:: sprawdzic czy kurs o takim ID istnieje, a dopiero jesli tak, to dolaczac
-                if (DBAccess.assignUserToCourse(userID,courseID) != 1) {
-                    // wyjątek że kurs nie istnieje lub nie udało się dodać
+                if (DBAccess.assignUserToCourse(userID, courseID) != 1) {
+                    throw new AssertionError("An error occurred while adding user to the course.");
                 }
-
-                ((MainActivity)getActivity()).setPresentCourseID(courseID);
-                Toast.makeText(getActivity(), "Właśnie dołączyłeś do kursu!", Toast.LENGTH_LONG).show();
+                ((MainActivity) requireActivity()).setPresentCourseID(courseID);
 
                 NavHostFragment.findNavController(JoinCourseFragment.this)
                         .navigate(R.id.action_JoinCourse_to_Course);

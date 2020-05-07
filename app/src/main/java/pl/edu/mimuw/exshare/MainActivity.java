@@ -2,6 +2,7 @@ package pl.edu.mimuw.exshare;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
@@ -17,7 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     UserData userData;
     private AppBarConfiguration mAppBarConfiguration;
-    private static int presentCourseID = 0;
+    private static int presentCourseID = -1;
 
     public int getPresentCourseID() {
         return presentCourseID;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
             userData = new UserData(account.getDisplayName(), account.getEmail(), account.getId());
         } else {
-            // TODO:: jakiś wyjątek że nie istnieje konto
+            throw new AssertionError("Can't find Google account.");
         }
 
         NavigationView navigationView = findViewById(R.id.nav_view);
