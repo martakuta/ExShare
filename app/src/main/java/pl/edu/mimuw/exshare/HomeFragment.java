@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class HomeFragment extends Fragment {
@@ -33,9 +32,6 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.create_course_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_host_fragment, new CreateCourseFragment());
-                ft.commit();*/
 
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_Home_to_CreateCourse);

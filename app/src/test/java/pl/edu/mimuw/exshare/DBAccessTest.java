@@ -42,16 +42,32 @@ public class DBAccessTest {
     }
 
     @Test
-    public void userCoursesTest() {
+    public void createNewCourseTest() {
         try {
-            DBAccess.assignUserToCourse("dummy1", 123);
+            int courseID = DBAccess.getNewCourse("dummy1", "example course");
+            if (courseID == -1) {
+                fail("An error occurred while creating a new course.");
+            }
         } catch (Exception e) {
             fail("Exception should not be thrown");
         }
     }
 
     @Test
-    public void userCoursesTest2() {
+    public void addUserToCourseTest() {
+        try {
+            int courseID = DBAccess.getNewCourse("dummy1", "another example course");
+            int ans = DBAccess.assignUserToCourse("dummy1", courseID);
+            if (ans != 1) {
+                fail("An error occurred while adding user to the course.");
+            }
+        } catch (Exception e) {
+            fail("Exception should not be thrown");
+        }
+    }
+
+    @Test
+    public void userCoursesTest() {
         try {
             JSONArray array = DBAccess.getUserCourses("dummy1");
         } catch (Exception e) {
