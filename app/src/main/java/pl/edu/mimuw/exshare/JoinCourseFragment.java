@@ -38,9 +38,12 @@ public class JoinCourseFragment extends Fragment {
                 Log.i("Adder","Course added");
                 int courseID = Integer.parseInt(course.getText().toString());
                 // TODO:: sprawdzic czy kurs o takim ID istnieje, a dopiero jesli tak, to dolaczac
-                DBAccess.assignUserToCourse(userID,courseID);
+                if (DBAccess.assignUserToCourse(userID,courseID) != 1) {
+                    // wyjątek że kurs nie istnieje lub nie udało się dodać
+                }
+
                 ((MainActivity)getActivity()).setPresentCourseID(courseID);
-                Toast.makeText(getActivity(), "Zarejestrowany do kursu", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Właśnie dołączyłeś do kursu!", Toast.LENGTH_LONG).show();
 
                 NavHostFragment.findNavController(JoinCourseFragment.this)
                         .navigate(R.id.action_JoinCourse_to_Course);
