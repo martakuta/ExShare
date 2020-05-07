@@ -86,18 +86,9 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            if (account != null) {
-                if (DBAccess.userExists(account.getId()) == 0) {
-                    if (DBAccess.addUser(account.getId())) {
-                        Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                        logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                    } else {
-                        Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                }
+            if (account != null && DBAccess.addUser(account.getId())) {
+                Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
+                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
             } else {
                 Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
             }
@@ -121,18 +112,11 @@ public class LoginActivity extends AppCompatActivity {
         // Już jest zalowogany przez Google
         if (account == null)
             Toast.makeText(this, "Zaloguj się, aby dołączyć", Toast.LENGTH_SHORT).show();
-        if (account != null) {
-            if (DBAccess.userExists(account.getId()) == 0) {
-                if (DBAccess.addUser(account.getId())) {
-                    Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                    logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-                } else {
-                    Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
-            }
+        if (account != null && DBAccess.addUser(account.getId())) {
+            Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
+            logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+        } else if (account != null) {
+            Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
         }
     }
 
