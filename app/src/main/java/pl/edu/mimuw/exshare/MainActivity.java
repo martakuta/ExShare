@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     UserData userData;
     private AppBarConfiguration mAppBarConfiguration;
     private static int presentCourseID = -1;
+    private static String presentTestName = "";
+    private static int presentExerciseNumber = -1;
 
     public int getPresentCourseID() {
         return presentCourseID;
@@ -27,6 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void setPresentCourseID(int newID) {
         presentCourseID = newID;
+    }
+
+    public String getPresentTestName() {
+        return presentTestName;
+    }
+
+    public void setPresentTestName(String newName) {
+        presentTestName = newName;
+    }
+
+    public int getPresentExerciseNumber() {
+        return presentExerciseNumber;
+    }
+
+    public void setPresentExerciseNumber(int newNumber) {
+        presentExerciseNumber = newNumber;
     }
 
     @SuppressLint("ResourceType")

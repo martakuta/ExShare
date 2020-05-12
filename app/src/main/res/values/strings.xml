@@ -3,6 +3,15 @@
 
     <string name="home_title"><b>Start</b></string>
     <string name="course_title">Kurs</string>
+    <string name="test_title">Sprawdzian</string>
+    <string name="add_test_title">Dodaj sprawdzian</string>
+    <string name="add_exercise_title">Dodaj zadanie</string>
+    <string name="exercise_title">Zadanie</string>
+    <string name="exercise_content_title">Treść zadania</string>
+    <string name="exercise_solution_title">Rozwiązanie zadania</string>
+    <string name="add_test">Dodaj nowy sprawdzian</string>
+    <string name="add_exercise">Dodaj nowe zadanie</string>
+    <string name="add_solution">Dodaj swoje rozwiązanie</string>
     <string name="join_course_title">Dołącz do kursu</string>
     <string name="create_course_title">Stwórz nowy kurs</string>
     <string name="your_courses_title">Twoje kursy</string>

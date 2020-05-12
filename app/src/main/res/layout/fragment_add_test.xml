@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".YourCoursesFragment">
+    tools:context=".CourseFragment">
 
     <LinearLayout
-        android:id="@+id/linear_layout_yc"
+        android:id="@+id/linear_layout_at"
         android:layout_marginTop="90dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="150dp" />
+        tools:layout_editor_absoluteX="150dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/add_exercise_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_exercise"
+            android:textColor="@color/myVeryDarkBlue"
+            android:layout_marginBottom="50dp"
+            android:textSize="17sp"
+            android:background="@color/myMiddleBlue"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
