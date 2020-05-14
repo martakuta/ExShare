@@ -115,7 +115,7 @@ public class ExerciseFragment extends Fragment {
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.exercise_content);
 
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName, exerciseNumber + ".png");
+        Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png");
         //handleDownloadedImage(downloadTask);
         downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

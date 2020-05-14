@@ -40,6 +40,7 @@ public class AddTestFragment extends Fragment {
                     Toast.makeText(requireContext(), "Musisz nazwać swój sprawdzian", Toast.LENGTH_SHORT).show();
                 } else {
                     DBAccess.addCourseTest(courseID, testName);
+                    ((MainActivity) requireActivity()).setPresentTestName(testName);
                     addExerciseBtn.setVisibility(View.VISIBLE);
                 }
             }

@@ -495,6 +495,7 @@ class DBAccess {
 
         @Override
         public void run() {
+            System.out.println("http://exshare.herokuapp.com/addTestTask/" + courseId + "/" + testName + "/" + taskNum);
             OkHttpClient httpClient = new OkHttpClient();
             RequestBody body = RequestBody.create(null, new byte[]{});
             Request request = new okhttp3.Request.Builder()
@@ -528,6 +529,7 @@ class DBAccess {
     }
 
     static boolean addTestExercise(int courseId, String testName, int taskNum) {
+        System.out.println("Jestem tutaj");
         AddTestExerciseRunnable runnable = new AddTestExerciseRunnable(courseId, testName, taskNum);
         Thread t = new Thread(runnable);
         t.start();
