@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_AddTest_to_AddExercise"
             app:destination="@id/nav_add_exercise" />
+        <action
+            android:id="@+id/action_AddTest_to_Test"
+            app:destination="@id/nav_test" />
     </fragment>
 
     <fragment
@@ -64,7 +67,17 @@
         android:id="@+id/nav_exercise"
         android:name="pl.edu.mimuw.exshare.ExerciseFragment"
         android:label="@string/exercise_title"
-        tools:layout="@layout/fragment_exercise" />
+        tools:layout="@layout/fragment_exercise" >
+        <action
+        android:id="@+id/action_Exercise_to_AddSolution"
+        app:destination="@id/nav_add_solution" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_solution"
+        android:name="pl.edu.mimuw.exshare.AddSolutionFragment"
+        android:label="@string/add_solution"
+        tools:layout="@layout/fragment_add_solution" />
 
     <fragment
         android:id="@+id/nav_join_course"

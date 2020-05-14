@@ -348,7 +348,198 @@ class DBAccess {
         return runnable.getResult();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private static class GetCourseTestsRunnable implements Runnable {
+        private int courseId;
+        private JSONArray result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getCourseTests/" + courseId)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public GetCourseTestsRunnable(int courseId) {
+            this.courseId = courseId;
+        }
+
+        JSONArray getResult() {
+            JSONArray res =  result;
+            result = null;
+            return res;
+        }
+    }
+
+    static JSONArray getCourseTests(int courseId) {
+        GetCourseTestsRunnable runnable = new GetCourseTestsRunnable(courseId);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    private static class AddCourseTestsRunnable implements Runnable {
+        int courseId;
+        String testName;
+        boolean result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .put(body)
+                    .url("http://exshare.herokuapp.com/addTestToCourse/" + courseId + "/" + testName)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() != 200) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public boolean getResult() {
+            boolean res = result;
+            result = false;
+            return res;
+        }
+
+        public AddCourseTestsRunnable(int courseId, String testName) {
+            this.courseId = courseId;
+            this.testName = testName;
+            this.result = false;
+        }
+    }
+
+    static boolean addCourseTest(int courseId, String testName) {
+        AddCourseTestsRunnable runnable = new AddCourseTestsRunnable(courseId, testName);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    private static class GetTestExercisesRunnable implements Runnable {
+        private int courseId;
+        private String testName;
+        private JSONArray result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getTestTasks/" + courseId + "/" + testName)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public GetTestExercisesRunnable(int courseId, String testName) {
+            this.courseId = courseId;
+            this.testName = testName;
+            this.result = null;
+        }
+
+        JSONArray getResult() {
+            JSONArray res =  result;
+            result = null;
+            return res;
+        }
+    }
+
+    static JSONArray getTestExercises(int courseId, String testName) {
+        GetTestExercisesRunnable runnable = new GetTestExercisesRunnable(courseId, testName);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    private static class AddTestExerciseRunnable implements Runnable {
+        int courseId;
+        String testName;
+        int taskNum;
+        boolean result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .put(body)
+                    .url("http://exshare.herokuapp.com/addTestTask/" + courseId + "/" + testName + "/" + taskNum)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() != 200) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public boolean getResult() {
+            boolean res = result;
+            result = false;
+            return res;
+        }
+
+        public AddTestExerciseRunnable(int courseId, String testName, int taskNum) {
+            this.courseId = courseId;
+            this.testName = testName;
+            this.taskNum = taskNum;
+            result = false;
+        }
+    }
+
+    static boolean addTestExercise(int courseId, String testName, int taskNum) {
+        AddTestExerciseRunnable runnable = new AddTestExerciseRunnable(courseId, testName, taskNum);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
     static JSONArray getCourseTests(int courseID) {
         String[] testNames = new String[5];
         testNames[0] = "test1";
@@ -380,5 +571,5 @@ class DBAccess {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 }

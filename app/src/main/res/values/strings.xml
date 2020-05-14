@@ -12,9 +12,14 @@
     <string name="add_test">Dodaj nowy sprawdzian</string>
     <string name="add_exercise">Dodaj nowe zadanie</string>
     <string name="add_solution">Dodaj swoje rozwiązanie</string>
-    <string name="upload_image">Przesyłaj zdjęcie</string>
+    <string name="upload_solution">Dodaj to rozwiązanie</string>
+    <string name="upload_content">Stwórz zadanie</string>
     <string name="download_image">Pobieraj zdjęcie</string>
-    <string name="add_image_gallery">Zdjęcie z Galerii</string>
+    <string name="add_solution_gallery">Wybierz rozwiązanie z galerii zdjęć</string>
+    <string name="add_content_gallery">Wybierz treść zadania z galerii</string>
+    <string name="add_exercise_number">Wpisz numer zadania</string>
+    <string name="name_your_test">Wpisz nazwę sprawdzianu</string>
+    <string name="create_test">Stwórz sprawdzian</string>
     <string name="join_course_title">Dołącz do kursu</string>
     <string name="create_course_title">Stwórz nowy kurs</string>
     <string name="your_courses_title">Twoje kursy</string>

@@ -4,19 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.view.OneShotPreDrawListener;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,24 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.google.firebase.storage.internal.Sleeper;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -73,12 +56,14 @@ public class ExerciseFragment extends Fragment {
             }
         }
     }
-   private void pickImage() {
+
+    private void pickImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
+
     private void handleDownloadedImage(Task<byte[]> downloadTask) {
         downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -92,10 +77,12 @@ public class ExerciseFragment extends Fragment {
             }
         });
     }
+
     private void setImageView(ImageView imageView, byte[] bytes) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageView.setImageBitmap(bitmap);
     }
+
     private void getExampleImage() {
         Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
         downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -105,6 +92,7 @@ public class ExerciseFragment extends Fragment {
             }
         });
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     @Override
@@ -125,10 +113,24 @@ public class ExerciseFragment extends Fragment {
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.exercise_content);
 
-        // na razie zakładam że użytkownik dodał tego zdjęcia sam
-        getExampleImage();
+        Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName, exerciseNumber + ".png");
+        //handleDownloadedImage(downloadTask);
+        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                setImageView(imageView, bytes);
+            }
+        });
 
-        view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.add_solution_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ExerciseFragment.this)
+                        .navigate(R.id.action_Exercise_to_AddSolution);
+            }
+        });
+
+        /*view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickImage();
@@ -147,14 +149,13 @@ public class ExerciseFragment extends Fragment {
         });
 
 
-
         view.findViewById(R.id.download_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName, exerciseNumber + ".png");
                 handleDownloadedImage(downloadTask);
             }
-        });
+        });*/
 
 
         //JSONArray exercise = DBAccess.getExercise(courseID, testName, exerciseNumber); // TODO:: getExercise które zwraca listę: 1. to treść, kolejne to dodane już rozwiązania

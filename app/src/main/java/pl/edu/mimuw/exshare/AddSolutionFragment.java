@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -26,10 +25,13 @@ import com.squareup.picasso.Picasso;
 import static android.app.Activity.RESULT_OK;
 
 
-public class AddExerciseFragment extends Fragment {
+public class AddSolutionFragment extends Fragment {
+    private String userID;
+    private String userName;
     private int courseID;
     private String courseName;
     private String testName;
+    private int exerciseNumber;
     private ImageView imageView;
     private FirebaseCloud firebaseCloud = new FirebaseCloud();
     private static final int SELECT_PICTURE = 1;
@@ -37,7 +39,7 @@ public class AddExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_add_exercise, container, false);
+        return inflater.inflate(R.layout.fragment_add_solution, container, false);
     }
 
     @Override
@@ -80,8 +82,8 @@ public class AddExerciseFragment extends Fragment {
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
+        exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.exercise_content);
-        EditText exerciseNumberPlace = view.findViewById(R.id.exercise_number);
 
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +98,7 @@ public class AddExerciseFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     imageView.getDrawable();
-                    int exerciseNumber = Integer.parseInt(exerciseNumberPlace.getText().toString());
                     firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png", imageView);
-                    DBAccess.addTestExercise(courseID, testName, exerciseNumber);
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();

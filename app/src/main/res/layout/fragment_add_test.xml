@@ -4,30 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="90dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
     tools:context=".CourseFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout_at"
-        android:layout_marginTop="90dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="150dp"
-        android:orientation="vertical" >
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/test_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:hint="@string/name_your_test" />
 
         <Button
             android:id="@+id/add_exercise_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:background="@color/myMiddleBlue"
             android:text="@string/add_exercise"
             android:textColor="@color/myVeryDarkBlue"
-            android:layout_marginBottom="50dp"
-            android:textSize="17sp"
-            android:background="@color/myMiddleBlue"/>
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:id="@+id/already_added_exercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/create_test"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/myMiddleBlue"
+            android:text="@string/create_test"
+            android:textColor="@color/myVeryDarkBlue"
+            android:textSize="17sp" />
 
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
