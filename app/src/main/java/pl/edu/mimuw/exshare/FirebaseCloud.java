@@ -3,9 +3,12 @@ package pl.edu.mimuw.exshare;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -13,9 +16,17 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 
 class FirebaseCloud {
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-
-
+    private FirebaseStorage storage;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    FirebaseCloud() {
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if(user==null)
+            Log.e("[Firebase]", "Error User not signed in " +
+                    "aka mAuth.getCurrentUser() returned null" );
+        storage = FirebaseStorage.getInstance();
+    }
     /**
      * Convert image from ImageView to byte array.
      * @param imageView ImageView Object.
