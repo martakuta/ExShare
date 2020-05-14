@@ -83,7 +83,7 @@ public class AddSolutionFragment extends Fragment {
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
-        imageView = view.findViewById(R.id.exercise_content);
+        imageView = view.findViewById(R.id.add_solution_image);
 
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
             @Override

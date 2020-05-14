@@ -27,12 +27,12 @@
             android:hint="@string/name_your_test" />
 
         <Button
-            android:id="@+id/add_exercise_btn"
+            android:id="@+id/create_test"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="50dp"
             android:background="@color/myMiddleBlue"
-            android:text="@string/add_exercise"
+            android:text="@string/create_test"
             android:textColor="@color/myVeryDarkBlue"
             android:textSize="17sp" />
 
@@ -43,13 +43,14 @@
             android:orientation="vertical" />
 
         <Button
-            android:id="@+id/create_test"
+            android:id="@+id/add_exercise_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/myMiddleBlue"
-            android:text="@string/create_test"
+            android:text="@string/add_exercise"
             android:textColor="@color/myVeryDarkBlue"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

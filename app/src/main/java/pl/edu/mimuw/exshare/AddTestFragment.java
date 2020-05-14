@@ -29,27 +29,27 @@ public class AddTestFragment extends Fragment {
 
         LinearLayout linearLayout = view.findViewById(R.id.linear_layout_at);
         EditText testNamePlace = view.findViewById(R.id.test_name);
-
-        view.findViewById(R.id.add_exercise_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(AddTestFragment.this)
-                        .navigate(R.id.action_AddTest_to_AddExercise);
-            }
-        });
+        int courseID = ((MainActivity) requireActivity()).getPresentCourseID();
+        Button addExerciseBtn = view.findViewById(R.id.add_exercise_btn);
 
         view.findViewById(R.id.create_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int courseID = ((MainActivity) requireActivity()).getPresentCourseID();
                 String testName = testNamePlace.getText().toString();
                 if (testName.length() == 0) {
                     Toast.makeText(requireContext(), "Musisz nazwać swój sprawdzian", Toast.LENGTH_SHORT).show();
                 } else {
                     DBAccess.addCourseTest(courseID, testName);
-                    NavHostFragment.findNavController(AddTestFragment.this)
-                            .navigate(R.id.action_AddTest_to_Test);
+                    addExerciseBtn.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        addExerciseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AddTestFragment.this)
+                        .navigate(R.id.action_AddTest_to_AddExercise);
             }
         });
 

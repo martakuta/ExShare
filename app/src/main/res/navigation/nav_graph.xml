@@ -42,9 +42,6 @@
         <action
             android:id="@+id/action_AddTest_to_AddExercise"
             app:destination="@id/nav_add_exercise" />
-        <action
-            android:id="@+id/action_AddTest_to_Test"
-            app:destination="@id/nav_test" />
     </fragment>
 
     <fragment

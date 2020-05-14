@@ -43,6 +43,8 @@ public class ExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Zadanie " + exerciseNumber);
         return inflater.inflate(R.layout.fragment_exercise, container, false);
     }
 

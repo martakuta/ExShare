@@ -80,7 +80,7 @@ public class AddExerciseFragment extends Fragment {
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
-        imageView = view.findViewById(R.id.imageView);
+        imageView = view.findViewById(R.id.add_content_image);
         EditText exerciseNumberPlace = view.findViewById(R.id.exercise_number);
 
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
@@ -100,7 +100,10 @@ public class AddExerciseFragment extends Fragment {
                     firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png", imageView);
                     DBAccess.addTestExercise(courseID, testName, exerciseNumber);
                 } catch (NullPointerException e) {
-                    Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Musisz dodać zdjęcie", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(requireContext(), "Numer zadania musi być liczbą", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }

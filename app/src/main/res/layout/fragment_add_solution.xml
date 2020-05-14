@@ -9,11 +9,13 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/add_solution_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_marginBottom="60dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/idea"
         app:layout_constraintBottom_toTopOf="@+id/add_image_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -38,7 +40,7 @@
         android:id="@+id/upload_btn"
         android:layout_width="170dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="150dp"
         android:background="@color/myLightBlue"
         android:padding="5dp"
         android:text="@string/upload_solution"
