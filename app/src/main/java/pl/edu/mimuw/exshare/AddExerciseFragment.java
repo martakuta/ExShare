@@ -80,7 +80,7 @@ public class AddExerciseFragment extends Fragment {
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
-        imageView = view.findViewById(R.id.exercise_content);
+        imageView = view.findViewById(R.id.imageView);
         EditText exerciseNumberPlace = view.findViewById(R.id.exercise_number);
 
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
