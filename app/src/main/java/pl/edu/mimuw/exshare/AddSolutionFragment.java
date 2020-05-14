@@ -98,7 +98,7 @@ public class AddSolutionFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     imageView.getDrawable();
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png", imageView);
+                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/solution", exerciseNumber + ".png", imageView);
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
