@@ -65,7 +65,7 @@ class FirebaseCloud {
      */
     UploadTask uploadFile(String path, String fileName, byte[] file) {
         StorageReference fireRef = getStorageReference(path,fileName);
-
+        Log.i("[UPLOADER]", "Starting upload: " + path+"/" + fileName);
         return fireRef.putBytes(file);
     }
     /**
@@ -84,7 +84,7 @@ class FirebaseCloud {
      */
     Task<byte[]> downloadFile(String path, String fileName) {
         StorageReference fireRef = getStorageReference(path,fileName);
-
+        Log.i("[DOWNLOADER]", "Starting download: " + path+"/" + fileName);
         return fireRef.getBytes(Long.MAX_VALUE);
     }
 
