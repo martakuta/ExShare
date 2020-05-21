@@ -85,16 +85,6 @@ public class ExerciseFragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void getExampleImage() {
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
-            }
-        });
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     @Override
@@ -115,7 +105,7 @@ public class ExerciseFragment extends Fragment {
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.exercise_content);
 
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png");
+        Task<byte[]> downloadTask = firebaseCloud.downloadContentImage(courseID, courseName, testName, exerciseNumber);
         //handleDownloadedImage(downloadTask);
         downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

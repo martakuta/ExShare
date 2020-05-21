@@ -63,16 +63,6 @@ public class AddExerciseFragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void getExampleImage() {
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
-            }
-        });
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,7 +87,7 @@ public class AddExerciseFragment extends Fragment {
                 try {
                     imageView.getDrawable();
                     int exerciseNumber = Integer.parseInt(exerciseNumberPlace.getText().toString());
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png", imageView);
+                    firebaseCloud.uploadContentImage(courseID, courseName, testName, exerciseNumber, imageView);
                     DBAccess.addTestExercise(courseID, testName, exerciseNumber);
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Musisz dodać zdjęcie", Toast.LENGTH_SHORT).show();

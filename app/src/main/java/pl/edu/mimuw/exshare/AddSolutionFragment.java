@@ -65,15 +65,6 @@ public class AddSolutionFragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void getExampleImage() {
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
-            }
-        });
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -98,7 +89,7 @@ public class AddSolutionFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     imageView.getDrawable();
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/solution", exerciseNumber + ".png", imageView);
+                    firebaseCloud.uploadSolutionImage(courseID, courseName, testName, exerciseNumber, imageView);
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
