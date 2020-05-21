@@ -25,7 +25,56 @@
         android:id="@+id/nav_course"
         android:name="pl.edu.mimuw.exshare.CourseFragment"
         android:label="@string/course_title"
-        tools:layout="@layout/fragment_course" />
+        tools:layout="@layout/fragment_course">
+        <action
+            android:id="@+id/action_Course_to_Test"
+            app:destination="@id/nav_test" />
+        <action
+            android:id="@+id/action_Course_to_AddTest"
+            app:destination="@id/nav_add_test" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_test"
+        android:name="pl.edu.mimuw.exshare.AddTestFragment"
+        android:label="@string/add_test_title"
+        tools:layout="@layout/fragment_add_test" >
+        <action
+            android:id="@+id/action_AddTest_to_AddExercise"
+            app:destination="@id/nav_add_exercise" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_test"
+        android:name="pl.edu.mimuw.exshare.TestFragment"
+        android:label="@string/test_title"
+        tools:layout="@layout/fragment_test" >
+        <action
+            android:id="@+id/action_Test_to_Exercise"
+            app:destination="@id/nav_exercise" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_exercise"
+        android:name="pl.edu.mimuw.exshare.AddExerciseFragment"
+        android:label="@string/add_exercise_title"
+        tools:layout="@layout/fragment_add_exercise" />
+
+    <fragment
+        android:id="@+id/nav_exercise"
+        android:name="pl.edu.mimuw.exshare.ExerciseFragment"
+        android:label="@string/exercise_title"
+        tools:layout="@layout/fragment_exercise" >
+        <action
+        android:id="@+id/action_Exercise_to_AddSolution"
+        app:destination="@id/nav_add_solution" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_solution"
+        android:name="pl.edu.mimuw.exshare.AddSolutionFragment"
+        android:label="@string/add_solution"
+        tools:layout="@layout/fragment_add_solution" />
 
     <fragment
         android:id="@+id/nav_join_course"

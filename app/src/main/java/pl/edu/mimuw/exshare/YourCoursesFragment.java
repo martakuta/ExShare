@@ -31,7 +31,7 @@ public class YourCoursesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
+        LinearLayout linearLayout = view.findViewById(R.id.linear_layout_yc);
 
         Bundle b = requireActivity().getIntent().getExtras();
         if (b != null) {
