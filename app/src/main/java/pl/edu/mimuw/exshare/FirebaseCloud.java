@@ -5,31 +5,35 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.widget.ImageView;
+import java.io.ByteArrayOutputStream;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 
-class FirebaseCloud {
+class FirebaseCloud implements FirebaseAuth.AuthStateListener{
     private FirebaseStorage storage;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
     private int count;
 
     FirebaseCloud() {
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        if (user == null)
-            Log.e("[Firebase]", "Error User not signed in " +
-                    "aka mAuth.getCurrentUser() returned null");
         storage = FirebaseStorage.getInstance();
+        Log.i("[AUTHENTICATOR]", "signed_in = " + isSignedIn());
+    }
+
+    /**
+     * Check if a user is signed in.
+     *
+     * @return @p true if the user is signed in, and @p false otherwise.
+     */
+    private boolean isSignedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
     }
 
     /**
@@ -65,12 +69,11 @@ class FirebaseCloud {
      * @param file     The file as a byte array.
      * @return UploadTask that has upload status listeners.
      */
-    UploadTask uploadFile(String path, String fileName, byte[] file) {
+    private UploadTask uploadFile(String path, String fileName, byte[] file) {
         StorageReference fireRef = getStorageReference(path, fileName);
         Log.i("[UPLOADER]", "Starting upload: " + path + "/" + fileName);
         return fireRef.putBytes(file);
     }
-
 
     /**
      * Download exercise content as an image from Firebase Storage.
@@ -86,18 +89,6 @@ class FirebaseCloud {
 
         StorageReference fireRef = getStorageReference(path, fileName);
         Log.i("[DOWNLOADER]", "Starting download: " + path + "/" + fileName);
-        return fireRef.getBytes(Long.MAX_VALUE);
-    }
-    /**
-     * Download a file from Firebase Storage.
-     * @param path path to the file.
-     * @param fileName Name of the file.
-     * @return Task that will allow access to the file with a listener once
-     * the file is downloaded.
-     */
-    Task<byte[]> downloadFile(String path, String fileName) {
-        StorageReference fireRef = getStorageReference(path,fileName);
-        Log.i("[DOWNLOADER]", "Starting download: " + path+"/" + fileName);
         return fireRef.getBytes(Long.MAX_VALUE);
     }
 
@@ -135,6 +126,12 @@ class FirebaseCloud {
         return num;
     }
 
+    /**
+     * Upload the count of images as a metadata of an empty file.
+     *
+     * @param metadataRef Path to the file containing the metadata.
+     * @return Upload Task.
+     */
     private Task<StorageMetadata> updateMetadata(StorageReference metadataRef) {
         count++;
         StorageMetadata metadata = new StorageMetadata.Builder()
@@ -142,6 +139,7 @@ class FirebaseCloud {
                 .build();
         return metadataRef.updateMetadata(metadata);
     }
+
     /**
      * Upload an exercise solution as an image to Firebase Storage.
      *
@@ -183,9 +181,15 @@ class FirebaseCloud {
                     uploadFile(path, fileName, file);
                 }));
             }
-
-
-
         });
+    }
+
+    /**
+     * Obligatory function that handles what happens when the user's authentication state is changed.
+     * @param firebaseAuth Firebase Authentication object which contains the authentication data.
+     */
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
     }
 }

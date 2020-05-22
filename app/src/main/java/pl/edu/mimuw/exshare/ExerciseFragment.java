@@ -59,27 +59,6 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
-    private void pickImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-    }
-
-    private void handleDownloadedImage(Task<byte[]> downloadTask) {
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.i("[DOWNLOADER]", "Image Download Failed: " + e.getMessage());
-            }
-        });
-    }
-
     private void setImageView(ImageView imageView, byte[] bytes) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageView.setImageBitmap(bitmap);
@@ -106,7 +85,6 @@ public class ExerciseFragment extends Fragment {
         imageView = view.findViewById(R.id.exercise_content);
 
         Task<byte[]> downloadTask = firebaseCloud.downloadContentImage(courseID, courseName, testName, exerciseNumber);
-        //handleDownloadedImage(downloadTask);
         downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -122,33 +100,6 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
-        /*view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickImage();
-            }
-        });
-
-
-        view.findViewById(R.id.upload_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (imageView.getDrawable() == null)
-                    Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
-                else
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName, exerciseNumber + ".png", imageView);
-            }
-        });
-
-
-        view.findViewById(R.id.download_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Task<byte[]> downloadTask = firebaseCloud.downloadFile("courses/" + courseID + "/" + courseName + "/" + testName, exerciseNumber + ".png");
-                handleDownloadedImage(downloadTask);
-            }
-        });*/
-
 
         //JSONArray exercise = DBAccess.getExercise(courseID, testName, exerciseNumber); // TODO:: getExercise które zwraca listę: 1. to treść, kolejne to dodane już rozwiązania
         /* TODO::
@@ -158,6 +109,5 @@ public class ExerciseFragment extends Fragment {
          * (ponieważ nie wiadomo ile ich będzie, może 0, to trzeba je tutaj dodawać dynamicznie (to chyba robi się podobnie jak dynamicznie dodawane buttony w klasach
          * YourCourseFragment, CourseFragment i TestFragment)
          */
-        // https://firebasestorage.googleapis.com/v0/b/exshare-1585853870941.appspot.com/o/example_directory%2Fexample.png?alt=media&token=c23e86ed-12af-4b94-b4df-1245c5b05bc5
     }
 }
