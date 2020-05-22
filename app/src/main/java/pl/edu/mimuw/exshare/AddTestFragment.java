@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 public class AddTestFragment extends Fragment {
@@ -26,7 +28,24 @@ public class AddTestFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         LinearLayout linearLayout = view.findViewById(R.id.linear_layout_at);
+        EditText testNamePlace = view.findViewById(R.id.test_name);
+        int courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         Button addExerciseBtn = view.findViewById(R.id.add_exercise_btn);
+
+        view.findViewById(R.id.create_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String testName = testNamePlace.getText().toString();
+                if (testName.length() == 0) {
+                    Toast.makeText(requireContext(), "Musisz nazwać swój sprawdzian", Toast.LENGTH_SHORT).show();
+                } else {
+                    DBAccess.addCourseTest(courseID, testName);
+                    ((MainActivity) requireActivity()).setPresentTestName(testName);
+                    addExerciseBtn.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         addExerciseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

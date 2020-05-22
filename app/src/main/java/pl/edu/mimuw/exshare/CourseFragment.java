@@ -32,6 +32,9 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        courseID = ((MainActivity) requireActivity()).getPresentCourseID();
+        courseName = DBAccess.getCourseName(courseID);
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Kurs " + courseName);
         return inflater.inflate(R.layout.fragment_course, container, false);
     }
 

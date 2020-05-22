@@ -31,6 +31,8 @@ public class TestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        testName = ((MainActivity) requireActivity()).getPresentTestName();
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Sprawdzian " + testName);
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
 
@@ -75,7 +77,7 @@ public class TestFragment extends Fragment {
                         int exerciseNumber = Integer.parseInt(btn.getText().toString());
                         System.out.println("Go to exercise " + exerciseNumber);
 
-                        ((MainActivity) requireActivity()).setPresentTestName(testName);
+                        ((MainActivity) requireActivity()).setPresentExerciseNumber(exerciseNumber);
 
                         NavHostFragment.findNavController(TestFragment.this)
                                 .navigate(R.id.action_Test_to_Exercise);
