@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            userData = new UserData(account.getDisplayName(), account.getEmail(), account.getId());
+            userData = new UserData(account.getDisplayName(), account.getEmail(), account.getId(), account.getIdToken());
         } else {
             throw new AssertionError("Can't find Google account.");
         }

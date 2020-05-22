@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -15,8 +16,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -28,13 +33,28 @@ public class LoginActivity extends AppCompatActivity {
     void logIn(UserData data) {
         // 'data' zawiera dane użytkownika
         Toast.makeText(this, "Zalogowano jako " + data.getName(), Toast.LENGTH_SHORT).show();
-
+        firebaseAuthWithGoogle(data.getIdToken());
         Bundle bundle = new Bundle();
         bundle.putString("userID", data.getId());
         bundle.putString("userName", data.getName());
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.i("[Firebase]", "signInWithCredential:success");
+                        } else {
+                            Log.i("[Firebase]", "Failed to sign in with Firebase");
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -88,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null && DBAccess.addUser(account.getId())) {
                 Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+                logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId(),account.getIdToken()));
             } else {
                 Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
             }
@@ -114,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Zaloguj się, aby dołączyć", Toast.LENGTH_SHORT).show();
         if (account != null && DBAccess.addUser(account.getId())) {
             Toast.makeText(this, "Zalogowano pomyślnie", Toast.LENGTH_SHORT).show();
-            logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId()));
+            logIn(new UserData(account.getDisplayName(), account.getEmail(), account.getId(),account.getIdToken()));
         } else if (account != null) {
             Toast.makeText(this, "Logowanie nie powiodło się", Toast.LENGTH_SHORT).show();
         }
@@ -125,8 +145,6 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, task -> changeToLoginUI());
-        {
-        }
     }
 
     private void changeToLoginUI() {
