@@ -18,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageMetadata;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
@@ -76,6 +78,17 @@ public class AddSolutionFragment extends Fragment {
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.add_solution_image);
 
+        Task<StorageMetadata> countDownnload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
+
+        countDownnload.addOnSuccessListener(storageMetadata -> {
+            String countStr = storageMetadata.getCustomMetadata("imageCount");
+            int count = firebaseCloud.atoi(countStr);
+            handleCount(count);
+        }).addOnFailureListener(e -> {
+            int count = 0;
+            handleCount(count);
+        });
+
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,5 +113,9 @@ public class AddSolutionFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void handleCount(int count) {
+        Toast.makeText(requireContext(), "zadanie już ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
     }
 }

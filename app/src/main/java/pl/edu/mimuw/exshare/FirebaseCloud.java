@@ -132,7 +132,7 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
      * @param str String containing a number.
      * @return converted int.
      */
-    private int atoi(String str) {
+    int atoi(String str) {
         int num;
         try {
             assert (str != null);
@@ -155,6 +155,35 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
                 .setCustomMetadata("imageCount", String.valueOf(count))
                 .build();
         return metadataRef.updateMetadata(metadata);
+    }
+
+    /**
+     * Get the number of solutions provided for an exercise.
+     *
+     * @param courseID       ID of the course.
+     * @param courseName     Name of the course.
+     * @param exerciseNumber Number of the exercise.
+     * @return Download Task.
+     */
+    Task<StorageMetadata> getSolutionsCount(int courseID, String courseName, String testName, int exerciseNumber) {
+        String path = "courses/" + courseID + "/" + courseName + "/" + testName + "/solution/" + exerciseNumber;
+        StorageReference metadataRef = getStorageReference(path, "metadata");
+
+
+        Log.i("[UPLOADER]", "Trying to get metadata...");
+
+        return metadataRef.getMetadata();
+/*
+                .addOnSuccessListener(storageMetadata -> {
+            String countStr = storageMetadata.getCustomMetadata("imageCount");
+            count = atoi(countStr);
+
+        }).addOnFailureListener(exception -> {
+            count = 0;
+
+
+        });
+*/
     }
 
     /**
