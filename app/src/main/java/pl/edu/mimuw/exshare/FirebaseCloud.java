@@ -93,6 +93,23 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
     }
 
     /**
+     * Download solution content as an image from Firebase Storage.
+     *
+     * @param courseID       ID of the course.
+     * @param courseName     Name of the course.
+     * @param exerciseNumber Number of the exercise.
+     * @return UploadTask that has upload status listeners.
+     */
+    Task<byte[]> downloadSolutionImage(int courseID, String courseName, String testName, int exerciseNumber, int solutionNumber) {
+        String path = "courses/" + courseID + "/" + courseName + "/" + testName + "/solution/" + exerciseNumber;
+        String fileName = solutionNumber + ".png";
+
+        StorageReference fireRef = getStorageReference(path, fileName);
+        Log.i("[DOWNLOADER]", "Starting download: " + path + "/" + fileName);
+        return fireRef.getBytes(Long.MAX_VALUE);
+    }
+
+    /**
      * Upload an exercise content as an image to Firebase Storage.
      *
      * @param courseID       ID of the course.

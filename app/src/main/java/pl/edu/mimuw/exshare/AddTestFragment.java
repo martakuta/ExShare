@@ -31,8 +31,20 @@ public class AddTestFragment extends Fragment {
         EditText testNamePlace = view.findViewById(R.id.test_name);
         int courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         Button addExerciseBtn = view.findViewById(R.id.add_exercise_btn);
+        Button createTestBtn = view.findViewById(R.id.create_test);
+        Button confirmBtn = view.findViewById(R.id.confirm_add_test);
 
-        view.findViewById(R.id.create_test).setOnClickListener(new View.OnClickListener() {
+        boolean alreadyCreated = ((MainActivity) requireActivity()).getTestAlreadyCreated();
+        System.out.println("alreadyCreated=" + alreadyCreated);
+        if (alreadyCreated) {
+            String testName = ((MainActivity) requireActivity()).getPresentTestName();
+            testNamePlace.setText(testName);
+            addExerciseBtn.setVisibility(View.VISIBLE);
+            confirmBtn.setVisibility(View.VISIBLE);
+            createTestBtn.setVisibility(View.INVISIBLE);
+        }
+
+        createTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String testName = testNamePlace.getText().toString();
@@ -42,6 +54,7 @@ public class AddTestFragment extends Fragment {
                     DBAccess.addCourseTest(courseID, testName);
                     ((MainActivity) requireActivity()).setPresentTestName(testName);
                     addExerciseBtn.setVisibility(View.VISIBLE);
+                    ((MainActivity) requireActivity()).setTestAlreadyCreated(true);
                 }
             }
         });
@@ -51,6 +64,14 @@ public class AddTestFragment extends Fragment {
             public void onClick(View v) {
                 NavHostFragment.findNavController(AddTestFragment.this)
                         .navigate(R.id.action_AddTest_to_AddExercise);
+            }
+        });
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AddTestFragment.this)
+                        .navigate(R.id.action_AddTest_to_Test);
             }
         });
 

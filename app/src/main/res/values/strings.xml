@@ -20,6 +20,7 @@
     <string name="add_exercise_number">Wpisz numer zadania</string>
     <string name="name_your_test">Wpisz nazwę sprawdzianu</string>
     <string name="create_test">Stwórz sprawdzian</string>
+    <string name="confirm_add_test">Zatwierdź i zakończ</string>
     <string name="join_course_title">Dołącz do kursu</string>
     <string name="create_course_title">Stwórz nowy kurs</string>
     <string name="your_courses_title">Twoje kursy</string>

@@ -540,38 +540,4 @@ class DBAccess {
         }
         return runnable.getResult();
     }
-
-    /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    static JSONArray getCourseTests(int courseID) {
-        String[] testNames = new String[5];
-        testNames[0] = "test1";
-        testNames[1] = "test2";
-        testNames[2] = "inny test";
-        testNames[3] = "jeszcze inny test";
-        testNames[4] = "osatatni test";
-        try {
-            return new JSONArray(testNames);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    static JSONArray getTestExercises(int courseID, String testName) {
-        Integer[] exerciseNumbers = new Integer[7];
-        exerciseNumbers[0] = 1;
-        exerciseNumbers[1] = 2;
-        exerciseNumbers[2] = 3;
-        exerciseNumbers[3] = 4;
-        exerciseNumbers[4] = 5;
-        exerciseNumbers[5] = 6;
-        exerciseNumbers[6] = 7;
-        try {
-            return new JSONArray(exerciseNumbers);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
 }

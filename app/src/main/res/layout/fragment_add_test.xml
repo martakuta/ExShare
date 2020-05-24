@@ -52,6 +52,17 @@
             android:textSize="17sp"
             android:visibility="invisible"/>
 
+        <Button
+            android:id="@+id/confirm_add_test"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/myMiddleBlue"
+            android:text="@string/confirm_add_test"
+            android:textColor="@color/myVeryDarkBlue"
+            android:textSize="17sp"
+            android:visibility="invisible"/>
+
     </LinearLayout>
 
 

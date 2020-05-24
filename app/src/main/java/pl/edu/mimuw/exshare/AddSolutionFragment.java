@@ -90,6 +90,10 @@ public class AddSolutionFragment extends Fragment {
                 try {
                     imageView.getDrawable();
                     firebaseCloud.uploadSolutionImage(courseID, courseName, testName, exerciseNumber, imageView);
+
+                    NavHostFragment.findNavController(AddSolutionFragment.this)
+                            .popBackStack();
+
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();

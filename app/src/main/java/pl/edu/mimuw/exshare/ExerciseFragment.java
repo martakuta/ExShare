@@ -92,6 +92,46 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
+        int solutionNumber = 3;
+
+        for (int i = 1; i <= solutionNumber; i++) {
+            try {
+                downloadTask = firebaseCloud.downloadSolutionImage(courseID, courseName, testName, exerciseNumber, i);
+                downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+
+                    /*Button btn = new Button(getActivity());
+                    btn.setText(testName);
+                    btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightBlue));
+                    btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                    btn.setTextSize(17);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 0, 0, 50);
+                    btn.setLayoutParams(params);
+                    linearLayout.addView(btn);*/
+
+                        ImageView solutionImg = new ImageView(getActivity());
+                        setImageView(solutionImg, bytes);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                600);
+                        params.setMargins(0, 0, 0, 40);
+                        solutionImg.setLayoutParams(params);
+                        linearLayout.addView(solutionImg);
+
+
+                        //setImageView(imageView, bytes);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+
         view.findViewById(R.id.add_solution_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

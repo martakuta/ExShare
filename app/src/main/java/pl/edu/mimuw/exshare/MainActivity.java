@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static int presentCourseID = -1;
     private static String presentTestName = "";
     private static int presentExerciseNumber = -1;
+    private static boolean testAlreadyCreated = false;
 
     public int getPresentCourseID() {
         return presentCourseID;
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setPresentExerciseNumber(int newNumber) {
         presentExerciseNumber = newNumber;
+    }
+
+    public boolean getTestAlreadyCreated() {
+        return testAlreadyCreated;
+    }
+
+    public void setTestAlreadyCreated(boolean newState) {
+        testAlreadyCreated = newState;
     }
 
     @SuppressLint("ResourceType")

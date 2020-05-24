@@ -48,6 +48,7 @@ public class CourseFragment extends Fragment {
         addTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity) requireActivity()).setTestAlreadyCreated(false);
                 NavHostFragment.findNavController(CourseFragment.this)
                         .navigate(R.id.action_Course_to_AddTest);
             }
@@ -63,10 +64,10 @@ public class CourseFragment extends Fragment {
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
 
-        JSONArray courseTests = DBAccess.getCourseTests(courseID); // TODO:: getCourseTest które zwraca listę sprawdzianów z ich tytułami
+        JSONArray courseTests = DBAccess.getCourseTests(courseID);
         for (int i = 0; i < courseTests.length(); i++) {
             try {
-                String testName = courseTests.get(i).toString(); // TODO:: testName jest jednocześnie unikatowym ID tego sprawdzianu, w jednym kursie nie moga byc dwie takie same nazwy sprawdzianow
+                String testName = courseTests.get(i).toString();
                 System.out.println("sprawdzian: " + testName);
 
                 Button btn = new Button(getActivity());
