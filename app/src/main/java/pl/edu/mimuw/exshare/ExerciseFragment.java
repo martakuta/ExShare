@@ -101,18 +101,6 @@ public class ExerciseFragment extends Fragment {
                     @Override
                     public void onSuccess(byte[] bytes) {
 
-                    /*Button btn = new Button(getActivity());
-                    btn.setText(testName);
-                    btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightBlue));
-                    btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
-                    btn.setTextSize(17);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 0, 0, 50);
-                    btn.setLayoutParams(params);
-                    linearLayout.addView(btn);*/
-
                         ImageView solutionImg = new ImageView(getActivity());
                         setImageView(solutionImg, bytes);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -121,9 +109,6 @@ public class ExerciseFragment extends Fragment {
                         params.setMargins(0, 0, 0, 40);
                         solutionImg.setLayoutParams(params);
                         linearLayout.addView(solutionImg);
-
-
-                        //setImageView(imageView, bytes);
                     }
                 });
             } catch (Exception e) {

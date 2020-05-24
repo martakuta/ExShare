@@ -54,10 +54,10 @@ public class TestFragment extends Fragment {
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
 
-        JSONArray testExercises = DBAccess.getTestExercises(courseID, testName); // TODO:: getTestExercises które zwraca listę zadań danego sprawdzianu razem z ich numerami
+        JSONArray testExercises = DBAccess.getTestExercises(courseID, testName);
         for (int i = 0; i < testExercises.length(); i++) {
             try {
-                int exerciseNumber = (Integer)testExercises.get(i); // TODO:: exerciseNumber musi być faktycznie integer, nie może być zadania np 1a
+                int exerciseNumber = (Integer)testExercises.get(i);
                 System.out.println("zadanie " + exerciseNumber);
 
                 Button btn = new Button(getActivity());
