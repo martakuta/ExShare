@@ -81,8 +81,7 @@ public class AddSolutionFragment extends Fragment {
         Task<StorageMetadata> countDownnload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
 
         countDownnload.addOnSuccessListener(storageMetadata -> {
-            String countStr = storageMetadata.getCustomMetadata("imageCount");
-            int count = firebaseCloud.atoi(countStr);
+            int count = firebaseCloud.pullCount(storageMetadata);
             handleCount(count);
         }).addOnFailureListener(e -> {
             int count = 0;

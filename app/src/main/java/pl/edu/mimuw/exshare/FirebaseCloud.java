@@ -173,17 +173,17 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
         Log.i("[UPLOADER]", "Trying to get metadata...");
 
         return metadataRef.getMetadata();
-/*
-                .addOnSuccessListener(storageMetadata -> {
-            String countStr = storageMetadata.getCustomMetadata("imageCount");
-            count = atoi(countStr);
+    }
 
-        }).addOnFailureListener(exception -> {
-            count = 0;
-
-
-        });
-*/
+    /**
+     * Get the number of solutions from Metadata
+     *
+     * @param storageMetadata - Metadata with the solutions counter
+     * @return solutions count
+     */
+    int pullCount(StorageMetadata storageMetadata) {
+        String countStr = storageMetadata.getCustomMetadata("imageCount");
+        return atoi(countStr);
     }
 
     /**
