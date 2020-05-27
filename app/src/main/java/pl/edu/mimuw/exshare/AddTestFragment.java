@@ -3,12 +3,6 @@ package pl.edu.mimuw.exshare;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -68,7 +67,7 @@ public class AddTestFragment extends Fragment {
             JSONArray testExercises = DBAccess.getTestExercises(courseID, testName);
             for (int i = 0; i < testExercises.length(); i++) {
                 try {
-                    int exerciseNumber = (Integer)testExercises.get(i);
+                    int exerciseNumber = (Integer) testExercises.get(i);
                     System.out.println("i: exercise number = " + i + ": " + exerciseNumber);
                     Task<byte[]> downloadTask = firebaseCloud.downloadContentImage(courseID, courseName, testName, exerciseNumber);
                     downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {

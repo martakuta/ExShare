@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="90dp"
     android:layout_marginLeft="40dp"
+    android:layout_marginTop="90dp"
     android:layout_marginRight="40dp"
     tools:context=".AddTestFragment">
 
@@ -33,9 +32,9 @@
             android:layout_height="50dp"
             android:layout_marginBottom="50dp"
             android:background="@color/myLightGreen"
+            android:padding="10dp"
             android:text="@string/create_test"
             android:textColor="@color/myDarkBrown"
-            android:padding="10dp"
             android:textSize="17sp" />
 
         <LinearLayout
@@ -49,12 +48,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/myLightGreen"
+            android:drawableStart="@drawable/ic_plus"
+            android:drawableLeft="@drawable/ic_plus"
+            android:padding="10dp"
             android:text="@string/add_exercise"
             android:textColor="@color/myDarkBrown"
             android:textSize="17sp"
-            android:drawableLeft="@drawable/ic_plus"
-            android:drawableStart="@drawable/ic_plus"
-            android:padding="10dp"
             android:visibility="invisible" />
 
         <Button
@@ -63,14 +62,13 @@
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:background="@color/myMiddleGreen"
+            android:padding="10dp"
             android:text="@string/confirm_add_test"
             android:textColor="@color/myDarkBrown"
             android:textSize="17sp"
-            android:padding="10dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
     </LinearLayout>
-
 
 
 </ScrollView>

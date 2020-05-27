@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.mimuw.exshare.LoginActivity"
-    android:background="@drawable/exshare_background">
+    android:background="@drawable/exshare_background"
+    tools:context="pl.edu.mimuw.exshare.LoginActivity">
 
     <TextView
         android:id="@+id/login_hello1_text"

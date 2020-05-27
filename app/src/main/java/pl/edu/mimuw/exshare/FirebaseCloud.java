@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.widget.ImageView;
-import java.io.ByteArrayOutputStream;
 
 import androidx.annotation.NonNull;
 
@@ -17,8 +16,10 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 
-class FirebaseCloud implements FirebaseAuth.AuthStateListener{
+
+class FirebaseCloud implements FirebaseAuth.AuthStateListener {
     private FirebaseStorage storage;
     private int count;
 
@@ -213,7 +214,7 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
 
         }).addOnFailureListener(exception -> {
             int errorCode = ((StorageException) exception).getErrorCode();
-            if(errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+            if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
                 count = 0;
                 StorageMetadata metadata = new StorageMetadata.Builder()
                         .setCustomMetadata("imageCount", String.valueOf(count))
@@ -222,16 +223,17 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener{
                 byte[] empty_file = {0};
                 metadataRef.putBytes(empty_file, metadata).addOnSuccessListener(taskSnapshot ->
                         updateMetadata(metadataRef).addOnSuccessListener(storageMetadata -> {
-                    String fileName = count + ".png";
-                    byte[] file = getImageFromView(imageView);
-                    uploadFile(path, fileName, file);
-                }));
+                            String fileName = count + ".png";
+                            byte[] file = getImageFromView(imageView);
+                            uploadFile(path, fileName, file);
+                        }));
             }
         });
     }
 
     /**
      * Obligatory function that handles what happens when the user's authentication state is changed.
+     *
      * @param firebaseAuth Firebase Authentication object which contains the authentication data.
      */
     @Override

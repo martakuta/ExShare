@@ -22,8 +22,6 @@
         <item name="android:textColorSecondary">@color/myVeryDarkGreen</item> <!--changes icons-->
         <!--<item name="android:background">@color/myLightGreen</item> changes background close to name-->
         <item name="actionMenuTextColor">@color/myVeryDarkGreen</item>
-        <!-- <item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
-         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item> -->
     </style>
 
     <item name="menu_course_group" type="id" />

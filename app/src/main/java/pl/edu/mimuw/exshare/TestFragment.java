@@ -1,22 +1,18 @@
 package pl.edu.mimuw.exshare;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +32,6 @@ public class TestFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class TestFragment extends Fragment {
         JSONArray testExercises = DBAccess.getTestExercises(courseID, testName);
         for (int i = 0; i < testExercises.length(); i++) {
             try {
-                int exerciseNumber = (Integer)testExercises.get(i);
+                int exerciseNumber = (Integer) testExercises.get(i);
                 System.out.println("zadanie " + exerciseNumber);
 
                 Button btn = new Button(getActivity());
@@ -65,7 +60,7 @@ public class TestFragment extends Fragment {
                 btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightGreen));
                 btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
-                btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_note_transp, 0, 0, 0);
+                btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_note_transp, 0, 0, 0);
                 btn.setPadding(50, 0, 50, 0);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,

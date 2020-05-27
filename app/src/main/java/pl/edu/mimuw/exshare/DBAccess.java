@@ -1,14 +1,9 @@
 package pl.edu.mimuw.exshare;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -53,6 +48,7 @@ class DBAccess {
 
     /**
      * Creates new thread running @see AddUserRunnable.
+     *
      * @param userId User identifier.
      * @return true if adding succeeded, false otherwise.
      */
@@ -171,7 +167,8 @@ class DBAccess {
 
     /**
      * Assigns user to course using another thread and waits for result.
-     * @param userId User identifier.
+     *
+     * @param userId   User identifier.
      * @param courseId Course identifier.
      * @return -1 in case of failure. 0 in case of non-existent course assignment, 1 on success.
      */
@@ -272,14 +269,14 @@ class DBAccess {
         }
 
         int getResult() {
-            int res =  result;
+            int res = result;
             result = -1;
             return res;
         }
     }
 
     /**
-     * @param userId User identifier.
+     * @param userId     User identifier.
      * @param courseName Created course name.
      * @return Integer with new course identifier. -1 in case of failure.
      */
@@ -326,7 +323,7 @@ class DBAccess {
         }
 
         String getResult() {
-            String res =  result;
+            String res = result;
             result = null;
             return res;
         }
@@ -373,7 +370,7 @@ class DBAccess {
         }
 
         JSONArray getResult() {
-            JSONArray res =  result;
+            JSONArray res = result;
             result = null;
             return res;
         }
@@ -469,7 +466,7 @@ class DBAccess {
         }
 
         JSONArray getResult() {
-            JSONArray res =  result;
+            JSONArray res = result;
             result = null;
             return res;
         }
@@ -541,7 +538,6 @@ class DBAccess {
         return runnable.getResult();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     static JSONArray getCourseFolders(int courseID) {
         String[] ans = new String[3];
         ans[0] = "folder 1";
@@ -555,7 +551,6 @@ class DBAccess {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     static JSONArray getFolderTests(int courseID, String folderName) {
         String[] ans = new String[6];
         ans[0] = "zielony";

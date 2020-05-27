@@ -53,7 +53,7 @@ public class YourCoursesFragment extends Fragment {
                 btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myDarkGreen));
                 btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
-                btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_course_transp, 0, 0, 0);
+                btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_course_transp, 0, 0, 0);
                 btn.setPadding(50, 0, 50, 0);
                 btn.setContentDescription(String.valueOf(courseID));
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

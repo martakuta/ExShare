@@ -54,7 +54,7 @@
         android:id="@+id/nav_add_test"
         android:name="pl.edu.mimuw.exshare.AddTestFragment"
         android:label="@string/add_test_title"
-        tools:layout="@layout/fragment_add_test" >
+        tools:layout="@layout/fragment_add_test">
         <action
             android:id="@+id/action_AddTest_to_AddExercise"
             app:destination="@id/nav_add_exercise" />
@@ -67,7 +67,7 @@
         android:id="@+id/nav_test"
         android:name="pl.edu.mimuw.exshare.TestFragment"
         android:label="@string/test_title"
-        tools:layout="@layout/fragment_test" >
+        tools:layout="@layout/fragment_test">
         <action
             android:id="@+id/action_Test_to_Exercise"
             app:destination="@id/nav_exercise" />
@@ -84,7 +84,7 @@
         android:id="@+id/nav_add_folder"
         android:name="pl.edu.mimuw.exshare.AddFolderFragment"
         android:label="@string/add_folder_title"
-        tools:layout="@layout/fragment_add_folder" >
+        tools:layout="@layout/fragment_add_folder">
         <action
             android:id="@+id/action_AddFolder_to_Folder"
             app:destination="@id/nav_folder" />
@@ -94,10 +94,10 @@
         android:id="@+id/nav_exercise"
         android:name="pl.edu.mimuw.exshare.ExerciseFragment"
         android:label="@string/exercise_title"
-        tools:layout="@layout/fragment_exercise" >
+        tools:layout="@layout/fragment_exercise">
         <action
-        android:id="@+id/action_Exercise_to_AddSolution"
-        app:destination="@id/nav_add_solution" />
+            android:id="@+id/action_Exercise_to_AddSolution"
+            app:destination="@id/nav_add_solution" />
     </fragment>
 
     <fragment

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="90dp"
     android:layout_marginLeft="50dp"
+    android:layout_marginTop="90dp"
     android:layout_marginRight="50dp"
     android:layout_marginBottom="20dp"
     tools:context=".AddFolderFragment">
@@ -32,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:textColor="@color/myVeryDarkGreen"
-            android:text="@string/check_tests_label"/>
+            android:text="@string/check_tests_label"
+            android:textColor="@color/myVeryDarkGreen" />
 
         <LinearLayout
             android:id="@+id/check_courses"
@@ -49,10 +48,9 @@
             android:background="@color/myMiddleGreen"
             android:text="@string/create_folder"
             android:textColor="@color/myDarkBrown"
-            android:textSize="17sp"/>
+            android:textSize="17sp" />
 
     </LinearLayout>
-
 
 
 </ScrollView>

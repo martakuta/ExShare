@@ -2,15 +2,7 @@ package pl.edu.mimuw.exshare;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +11,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 
 public class AddFolderFragment extends Fragment {
@@ -72,7 +62,6 @@ public class AddFolderFragment extends Fragment {
         }
 
         addCheckedTests.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 String folderName = folderNamePlace.getText().toString();
@@ -83,15 +72,15 @@ public class AddFolderFragment extends Fragment {
                     System.out.println("Dodano folder o nazwie " + folderName);
                     int checkboxesCount = coursesCheckbox.getChildCount();
                     for (int i = 0; i < checkboxesCount; i++) {
-                        CheckBox checkBox = (CheckBox)coursesCheckbox.getChildAt(i);
+                        CheckBox checkBox = (CheckBox) coursesCheckbox.getChildAt(i);
                         if (checkBox.isChecked()) {
                             howManyChecked++;
                         }
                     }
-                    String[] folderArray = new String[howManyChecked+1];
+                    String[] folderArray = new String[howManyChecked + 1];
                     folderArray[0] = folderName;
                     for (int i = 0; i < checkboxesCount; i++) {
-                        CheckBox checkBox = (CheckBox)coursesCheckbox.getChildAt(i);
+                        CheckBox checkBox = (CheckBox) coursesCheckbox.getChildAt(i);
                         if (checkBox.isChecked()) {
                             folderArray[howManyChecked] = checkBox.getText().toString();
                             howManyChecked--;

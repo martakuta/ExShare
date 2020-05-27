@@ -6,15 +6,15 @@
 
     <item
         android:id="@+id/action_add_test"
+        android:icon="@drawable/ic_test_green_new"
         android:orderInCategory="300"
         android:title="@string/add_test_title"
-        android:icon="@drawable/ic_test_green_new"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_add_folder"
+        android:icon="@drawable/ic_folder_green_new"
         android:orderInCategory="300"
         android:title="@string/add_folder_title"
-        android:icon="@drawable/ic_folder_green_new"
         app:showAsAction="ifRoom" />
 
 </menu>
