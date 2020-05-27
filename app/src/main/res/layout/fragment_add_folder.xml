@@ -23,8 +23,8 @@
             android:id="@+id/folder_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="40dp"
             android:hint="@string/name_your_folder" />
 
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
-            android:background="@color/myYellow"
+            android:background="@color/myMiddleGreen"
             android:text="@string/create_folder"
             android:textColor="@color/myDarkBrown"
             android:textSize="17sp"/>
