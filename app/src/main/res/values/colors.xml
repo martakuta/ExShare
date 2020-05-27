@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="myLightBlue">#b3e6ff</color>
-    <color name="myMiddleBlue">#33bbff</color>
-    <color name="myDarkBlue">#0077b3</color>
-    <color name="myVeryDarkBlue">#003d66</color>
-    <color name="myYellow">#ffcc00</color>
+    <color name="myLightGreen">#8fde8f</color>
+    <color name="myMiddleGreen">#6fdc6f</color>
+    <color name="myDarkGreen">#0dac0d</color>
+    <color name="myVeryDarkGreen">#239023</color>
+    <color name="myDarkBrown">#4d2600</color>
+    <color name="myYellow">#ffda47</color>
     <color name="myBackgroundWhite">#fafafa</color>
     <color name="myWhite">#ffffff</color>
 </resources>

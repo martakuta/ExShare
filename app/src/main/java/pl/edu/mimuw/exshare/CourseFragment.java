@@ -67,8 +67,8 @@ public class CourseFragment extends Fragment {
 
                 Button btn = new Button(getActivity());
                 btn.setText(folderName);
-                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myMiddleBlue));
-                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myDarkGreen));
+                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
                 btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_folder_transp, 0, 0, 0);
                 btn.setPadding(50, 0, 50, 0);
@@ -105,8 +105,8 @@ public class CourseFragment extends Fragment {
 
                 Button btn = new Button(getActivity());
                 btn.setText(testName);
-                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightBlue));
-                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myMiddleGreen));
+                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
                 btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_test_transp, 0, 0, 0);
                 btn.setPadding(50, 0, 50, 0);

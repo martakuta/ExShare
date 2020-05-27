@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:textColor="@color/myMiddleBlue"
+            android:textColor="@color/myVeryDarkGreen"
             android:text="@string/check_tests_label"/>
 
         <LinearLayout
@@ -48,7 +48,7 @@
             android:layout_marginTop="40dp"
             android:background="@color/myYellow"
             android:text="@string/create_folder"
-            android:textColor="@color/myVeryDarkBlue"
+            android:textColor="@color/myDarkBrown"
             android:textSize="17sp"/>
 
     </LinearLayout>

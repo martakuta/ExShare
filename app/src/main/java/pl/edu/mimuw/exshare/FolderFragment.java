@@ -65,8 +65,8 @@ public class FolderFragment extends Fragment {
 
                 Button btn = new Button(getActivity());
                 btn.setText(testName);
-                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightBlue));
-                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myMiddleGreen));
+                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
                 btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_test_transp, 0, 0, 0);
                 btn.setPadding(50, 0, 50, 0);

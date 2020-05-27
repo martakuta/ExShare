@@ -62,9 +62,11 @@ public class TestFragment extends Fragment {
 
                 Button btn = new Button(getActivity());
                 btn.setText(String.valueOf(exerciseNumber));
-                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myYellow));
-                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightGreen));
+                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
+                btn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_note_transp, 0, 0, 0);
+                btn.setPadding(50, 0, 50, 0);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
