@@ -1,53 +1,60 @@
 <resources>
+    <!--general: home, menu-->
     <string name="app_name">ExShare</string>
-
-    <string name="home_title"><b>Start</b></string>
-    <string name="course_title">Kurs</string>
-    <string name="test_title">Sprawdzian</string>
-    <string name="add_test_title">Dodaj sprawdzian</string>
-    <string name="add_exercise_title">Dodaj zadanie</string>
-    <string name="exercise_title">Zadanie</string>
-    <string name="exercise_content_title">Treść zadania</string>
-    <string name="exercise_solution_title">Rozwiązanie zadania</string>
-    <string name="add_test">Dodaj nowy sprawdzian</string>
-    <string name="add_exercise">Dodaj nowe zadanie</string>
-    <string name="add_solution">Dodaj swoje rozwiązanie</string>
-    <string name="upload_solution">Dodaj to rozwiązanie</string>
-    <string name="upload_content">Stwórz zadanie</string>
-    <string name="download_image">Pobieraj zdjęcie</string>
-    <string name="add_solution_gallery">Wybierz rozwiązanie z galerii zdjęć</string>
-    <string name="add_content_gallery">Wybierz treść zadania z galerii</string>
-    <string name="add_exercise_number">Wpisz numer zadania</string>
-    <string name="name_your_test">Wpisz nazwę sprawdzianu</string>
-    <string name="create_test">Stwórz sprawdzian</string>
-    <string name="confirm_add_test">Zatwierdź i zakończ</string>
-    <string name="join_course_title">Dołącz do kursu</string>
-    <string name="create_course_title">Stwórz nowy kurs</string>
-    <string name="your_courses_title">Twoje kursy</string>
-    <string name="sign_out_text">Wyloguj się</string>
-
+    <string name="home_title"><b>ExShare</b></string>
     <string name="menu_header">ExShare</string>
-
     <string name="home_hello1">Cześć!</string>
     <string name="home_hello2">Dołącz do nas, aby dzielić się zadaniami i ich rozwiązaniami!</string>
+    <string name="your_courses_title">Twoje kursy</string>
+    <string name="course_title">Kurs</string>
+    <string name="test_title">Sprawdzian</string>
+    <string name="exercise_title">Zadanie</string>
+    <string name="folder_title">Folder</string>
 
-    <string name="enter_course_code_place"> </string>
-    <string name="enter_course_code_label">Wpisz kod kursu:</string>
-    <string name="course_fragment_hello">Witaj na kursie!</string>
-    <string name="create_course_name_place"> </string>
-    <string name="create_course_name_label">Nazwij swój kurs:</string>
-    <string name="login_email">Email</string>
-    <string name="login_password">Hasło</string>
-    <string name="login_zaloguj">Zaloguj się</string>
+    <!--log in-->
     <string name="google_sign_in">Zaloguj się przez Google</string>
-    <string name="login_zarejestruj">Zarejestruj się</string>
-
-    <string name="welcome">"Witaj !"</string>
     <string name="invalid_username">Niepoprawna nazwa użytkownika</string>
     <string name="invalid_password">Hasło musi mieć >5 znaków</string>
     <string name="login_failed">"Logowanie nie powiodło się"</string>
     <string name="incorrect_login">"Email lub hasło są nieprawidłowe."</string>
+    <string name="sign_out_text">Wyloguj się</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--join course-->
+    <string name="join_course_title">Dołącz do kursu</string>
+    <string name="enter_course_code_place"> </string>
+    <string name="enter_course_code_label">Wpisz kod kursu:</string>
+
+    <!--create course-->
+    <string name="create_course_title">Stwórz nowy kurs</string>
+    <string name="create_course_name_place"> </string>
+    <string name="create_course_name_label">Nazwij swój kurs:</string>
+
+    <!--add test-->
+    <string name="add_test_title">Dodaj sprawdzian</string>
+    <string name="add_test">Dodaj nowy sprawdzian</string>
+    <string name="name_your_test">Wpisz nazwę sprawdzianu</string>
+    <string name="create_test">Stwórz sprawdzian</string>
+    <string name="confirm_add_test">Zatwierdź i zakończ</string>
+
+    <!--add exercise-->
+    <string name="add_exercise_title">Dodaj zadanie</string>
+    <string name="exercise_content_title">Treść zadania</string>
+    <string name="add_exercise">Dodaj zadanie</string>
+    <string name="upload_content">Stwórz zadanie</string>
+    <string name="add_content_gallery">Wybierz treść zadania z galerii</string>
+    <string name="add_exercise_number">Wpisz numer zadania</string>
+
+    <!--add solution-->
+    <string name="exercise_solution_title">Rozwiązanie zadania</string>
+    <string name="add_solution">Dodaj swoje rozwiązanie</string>
+    <string name="upload_solution">Dodaj to rozwiązanie</string>
+    <string name="add_solution_gallery">Wybierz rozwiązanie z galerii zdjęć</string>
+
+    <!--add folder-->
+    <string name="add_folder">Dodaj nowy folder</string>
+    <string name="add_folder_title">Dodaj folder</string>
+    <string name="name_your_folder">Wpisz nazwę folderu</string>
+    <string name="create_folder">Stwórz folder</string>
+    <string name="check_tests_label">Wybierz te sprawdziany, które chcesz dodać do nowego folderu:</string>
+
 </resources>

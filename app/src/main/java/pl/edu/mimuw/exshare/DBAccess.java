@@ -540,4 +540,45 @@ class DBAccess {
         }
         return runnable.getResult();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    static JSONArray getCourseFolders(int courseID) {
+        String[] ans = new String[3];
+        ans[0] = "folder 1";
+        ans[1] = "folder 2";
+        ans[2] = "folder 3";
+        try {
+            return new JSONArray(ans);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    static JSONArray getFolderTests(int courseID, String folderName) {
+        String[] ans = new String[6];
+        ans[0] = "zielony";
+        ans[1] = "niebieski";
+        ans[2] = "zolty";
+        ans[3] = "czerwony";
+        ans[4] = "czarny";
+        ans[5] = "bialy";
+        try {
+            return new JSONArray(ans);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    static void addFolder(int courseID, JSONArray jsonFolderArray) {
+        // w pierwszym polu jest nazwa folderu, a w pozostałych nazwy sprawdzianów do niego należących
+        try {
+            System.out.println("Dodano folder o nazwie " + jsonFolderArray.get(0) + " do kursu " + courseID);
+            System.out.println("Jego elementy to (1 to nazwa folderu): " + jsonFolderArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

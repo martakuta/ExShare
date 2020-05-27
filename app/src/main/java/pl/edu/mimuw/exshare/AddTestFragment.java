@@ -69,7 +69,7 @@ public class AddTestFragment extends Fragment {
             for (int i = 0; i < testExercises.length(); i++) {
                 try {
                     int exerciseNumber = (Integer)testExercises.get(i);
-                    System.out.println(i + ": " + exerciseNumber);
+                    System.out.println("i: exercise number = " + i + ": " + exerciseNumber);
                     Task<byte[]> downloadTask = firebaseCloud.downloadContentImage(courseID, courseName, testName, exerciseNumber);
                     downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
@@ -122,9 +122,5 @@ public class AddTestFragment extends Fragment {
                         .navigate(R.id.action_AddTest_to_Test);
             }
         });
-
-        //TODO:: dodane już zadania dodawać do jakiejś struktury, a potem (niekoniecznie w tym sprincie)
-        // jakoś wyświetlać użytkownikowi, co już zostało dodane i pewnie jakis przycisk potwierdzajacy dodanie
-
     }
 }

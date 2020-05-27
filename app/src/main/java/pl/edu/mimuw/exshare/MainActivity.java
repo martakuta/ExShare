@@ -2,6 +2,9 @@ package pl.edu.mimuw.exshare;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private static int presentCourseID = -1;
     private static String presentTestName = "";
+    private static String presentFolderName = "";
     private static int presentExerciseNumber = -1;
     private static boolean testAlreadyCreated = false;
 
@@ -54,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTestAlreadyCreated(boolean newState) {
         testAlreadyCreated = newState;
+    }
+
+    public String getPresentFolderName() {
+        return presentFolderName;
+    }
+
+    public void setPresentFolderName(String newName) {
+        presentFolderName = newName;
     }
 
     @SuppressLint("ResourceType")

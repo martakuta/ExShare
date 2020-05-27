@@ -30,8 +30,24 @@
             android:id="@+id/action_Course_to_Test"
             app:destination="@id/nav_test" />
         <action
+            android:id="@+id/action_Course_to_Folder"
+            app:destination="@id/nav_folder" />
+        <action
             android:id="@+id/action_Course_to_AddTest"
             app:destination="@id/nav_add_test" />
+        <action
+            android:id="@+id/action_Course_to_AddFolder"
+            app:destination="@id/nav_add_folder" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_folder"
+        android:name="pl.edu.mimuw.exshare.FolderFragment"
+        android:label="@string/folder_title"
+        tools:layout="@layout/fragment_folder">
+        <action
+            android:id="@+id/action_Folder_to_Test"
+            app:destination="@id/nav_test" />
     </fragment>
 
     <fragment
@@ -63,6 +79,16 @@
         android:label="@string/add_exercise_title"
         tools:layout="@layout/fragment_add_exercise" />
 
+
+    <fragment
+        android:id="@+id/nav_add_folder"
+        android:name="pl.edu.mimuw.exshare.AddFolderFragment"
+        android:label="@string/add_folder_title"
+        tools:layout="@layout/fragment_add_folder" >
+        <action
+            android:id="@+id/action_AddFolder_to_Folder"
+            app:destination="@id/nav_folder" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_exercise"

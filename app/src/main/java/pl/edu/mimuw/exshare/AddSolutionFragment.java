@@ -78,9 +78,9 @@ public class AddSolutionFragment extends Fragment {
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.add_solution_image);
 
-        Task<StorageMetadata> countDownnload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
+        Task<StorageMetadata> countDownload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
 
-        countDownnload.addOnSuccessListener(storageMetadata -> {
+        countDownload.addOnSuccessListener(storageMetadata -> {
             int count = firebaseCloud.pullCount(storageMetadata);
             handleCount(count);
         }).addOnFailureListener(e -> {

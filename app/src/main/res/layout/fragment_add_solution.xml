@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="100dp"
+    android:layout_marginTop="80dp"
     tools:context=".AddSolutionFragment">
 
 
@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="60dp"
         android:src="@drawable/idea"
@@ -20,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button

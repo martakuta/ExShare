@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_add_test"
+        android:orderInCategory="300"
+        android:title="@string/add_test_title"
+        android:icon="@drawable/ic_test_new"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_add_folder"
+        android:orderInCategory="300"
+        android:title="@string/add_folder_title"
+        android:icon="@drawable/ic_folder_new"
+        app:showAsAction="ifRoom" />
+
+</menu>

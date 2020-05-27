@@ -16,11 +16,11 @@
             android:title="@string/your_courses_title" />
         <item
             android:id="@+id/nav_join_course"
-            android:icon="@drawable/ic_add"
+            android:icon="@drawable/ic_test_new"
             android:title="@string/join_course_title" />
         <item
             android:id="@+id/nav_create_course"
-            android:icon="@drawable/ic_add"
+            android:icon="@drawable/ic_test_new"
             android:title="@string/create_course_title" />
 
     </group>

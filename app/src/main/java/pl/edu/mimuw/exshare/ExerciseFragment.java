@@ -6,11 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,10 +19,12 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageMetadata;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -69,7 +69,7 @@ public class ExerciseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LinearLayout linearLayout = view.findViewById(R.id.linear_layout_ef);
+
 
         Bundle b = requireActivity().getIntent().getExtras();
         try {
@@ -92,11 +92,35 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
-        int solutionNumber = 3;
+        Task<StorageMetadata> countDownload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
 
-        for (int i = 1; i <= solutionNumber; i++) {
+        countDownload.addOnSuccessListener(storageMetadata -> {
+            int count = firebaseCloud.pullCount(storageMetadata);
+            handleCount(count);
+            LinearLayout linearLayout = view.findViewById(R.id.linear_layout_ef);
+            showSolutions(count, linearLayout);
+        }).addOnFailureListener(e -> {
+            int count = 0;
+            handleCount(count);
+        });
+
+        view.findViewById(R.id.add_solution_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ExerciseFragment.this)
+                        .navigate(R.id.action_Exercise_to_AddSolution);
+            }
+        });
+    }
+
+    private void handleCount(int count) {
+        Toast.makeText(requireContext(), "zadanie ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
+    }
+
+    private void showSolutions(int count, LinearLayout linearLayout) {
+        for (int i = 1; i <= count; i++) {
             try {
-                downloadTask = firebaseCloud.downloadSolutionImage(courseID, courseName, testName, exerciseNumber, i);
+                Task<byte[]> downloadTask = firebaseCloud.downloadSolutionImage(courseID, courseName, testName, exerciseNumber, i);
                 downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
@@ -116,23 +140,5 @@ public class ExerciseFragment extends Fragment {
                 break;
             }
         }
-
-        view.findViewById(R.id.add_solution_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(ExerciseFragment.this)
-                        .navigate(R.id.action_Exercise_to_AddSolution);
-            }
-        });
-
-
-        //JSONArray exercise = DBAccess.getExercise(courseID, testName, exerciseNumber); // TODO:: getExercise które zwraca listę: 1. to treść, kolejne to dodane już rozwiązania
-        /* TODO::
-         * i teraz tutaj musi byc cos co złapie z layoutu pudełko na treść zadania (ImageView content = view.findViewById(R.id.exercise_content);)
-         * a potem przypisze mu obraz który w jakiejś formie dostanie z bazy danych, przez DBAccess.getExercise w pierwszym elemencie listy
-         * następnie z kolejnych elementów listy pobierze kolejne rozwiązania i je podobnie wyświetli - dodając dla każdego z nich nowy ImageView czy coś takiego
-         * (ponieważ nie wiadomo ile ich będzie, może 0, to trzeba je tutaj dodawać dynamicznie (to chyba robi się podobnie jak dynamicznie dodawane buttony w klasach
-         * YourCourseFragment, CourseFragment i TestFragment)
-         */
     }
 }
