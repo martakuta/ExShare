@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +26,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class ExerciseFragment extends Fragment {
     private static final int SELECT_PICTURE = 1;
-    private String userID;
-    private String userName;
     private int courseID;
     private String courseName;
     private String testName;
@@ -65,14 +62,6 @@ public class ExerciseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        Bundle b = requireActivity().getIntent().getExtras();
-        try {
-            userID = b.getString("userID");
-        } catch (NullPointerException e) {
-            Toast.makeText(requireContext(), "Wystąpił problem z zalogowaniem.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
@@ -91,12 +80,8 @@ public class ExerciseFragment extends Fragment {
 
         countDownload.addOnSuccessListener(storageMetadata -> {
             int count = firebaseCloud.pullCount(storageMetadata);
-            handleCount(count);
             LinearLayout linearLayout = view.findViewById(R.id.linear_layout_ef);
             showSolutions(count, linearLayout);
-        }).addOnFailureListener(e -> {
-            int count = 0;
-            handleCount(count);
         });
 
         view.findViewById(R.id.add_solution_btn).setOnClickListener(new View.OnClickListener() {
@@ -106,10 +91,6 @@ public class ExerciseFragment extends Fragment {
                         .navigate(R.id.action_Exercise_to_AddSolution);
             }
         });
-    }
-
-    private void handleCount(int count) {
-        Toast.makeText(requireContext(), "zadanie ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
     }
 
     private void showSolutions(int count, LinearLayout linearLayout) {

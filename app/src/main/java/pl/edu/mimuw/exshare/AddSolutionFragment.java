@@ -1,30 +1,30 @@
 package pl.edu.mimuw.exshare;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class AddSolutionFragment extends Fragment {
-    private String userID;
-    private String userName;
     private int courseID;
     private String courseName;
     private String testName;
@@ -57,9 +57,45 @@ public class AddSolutionFragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 
-    private void setImageView(ImageView imageView, byte[] bytes) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        imageView.setImageBitmap(bitmap);
+    private void addSolution(ImageView imageView) throws NullPointerException {
+        String path = "courses/" + courseID + "/" + courseName + "/" + testName + "/solution/" + exerciseNumber;
+        StorageReference metadataRef = firebaseCloud.getStorageReference(path, "metadata");
+
+        metadataRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+            String countStr = storageMetadata.getCustomMetadata("imageCount");
+            int count = firebaseCloud.atoi(countStr) + 1;
+            firebaseCloud.updateMetadata(metadataRef, count).addOnSuccessListener(storageMetadata1 -> {
+                UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, count);
+                uploadTask.addOnSuccessListener(taskSnapshot -> {
+                    NavHostFragment.findNavController(AddSolutionFragment.this)
+                            .popBackStack();
+                }).addOnFailureListener(e -> {
+                    NavHostFragment.findNavController(AddSolutionFragment.this)
+                            .popBackStack();
+                });
+            });
+
+        }).addOnFailureListener(e -> {
+            int errorCode = ((StorageException) e).getErrorCode();
+            if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                StorageMetadata metadata = firebaseCloud.createMetadata(0);
+                byte[] empty_file = {0};
+
+                metadataRef.putBytes(empty_file, metadata).addOnSuccessListener(taskSnapshot -> {
+                    firebaseCloud.updateMetadata(metadataRef, 1).addOnSuccessListener(m -> {
+                        UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, 1);
+                        uploadTask.addOnSuccessListener(taskSnapshot1 -> {
+                            NavHostFragment.findNavController(AddSolutionFragment.this)
+                                    .popBackStack();
+                        }).addOnFailureListener(e1 -> {
+                            NavHostFragment.findNavController(AddSolutionFragment.this)
+                                    .popBackStack();
+                        });
+                    });
+                });
+            }
+
+        });
     }
 
 
@@ -91,25 +127,20 @@ public class AddSolutionFragment extends Fragment {
         });
 
 
-        view.findViewById(R.id.upload_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    imageView.getDrawable();
-                    firebaseCloud.uploadSolutionImage(courseID, courseName, testName, exerciseNumber, imageView);
+        view.findViewById(R.id.upload_btn).setOnClickListener(view1 -> {
+            try {
+                imageView.getDrawable();
+                addSolution(imageView);
 
-                    NavHostFragment.findNavController(AddSolutionFragment.this)
-                            .popBackStack();
-
-                } catch (NullPointerException e) {
-                    Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+            } catch (NullPointerException e) {
+                Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         });
     }
 
     private void handleCount(int count) {
-        Toast.makeText(requireContext(), "zadanie już ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
+        if (count != 0)
+            Toast.makeText(requireContext(), "zadanie już ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
     }
 }

@@ -5,23 +5,20 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.widget.ImageView;
+import java.io.ByteArrayOutputStream;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-
 
 class FirebaseCloud implements FirebaseAuth.AuthStateListener {
     private FirebaseStorage storage;
-    private int count;
 
     FirebaseCloud() {
         storage = FirebaseStorage.getInstance();
@@ -57,7 +54,7 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener {
      * @param fileName Name of the file.
      * @return Associated StorageReference Object.
      */
-    private StorageReference getStorageReference(String path, String fileName) {
+    StorageReference getStorageReference(String path, String fileName) {
         String fullPath = path + "/" + fileName;
         return storage.getReference().child(fullPath);
     }
@@ -74,6 +71,19 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener {
         StorageReference fireRef = getStorageReference(path, fileName);
         Log.i("[UPLOADER]", "Starting upload: " + path + "/" + fileName);
         return fireRef.putBytes(file);
+    }
+    /**
+     * Upload an image to the Firebase Storage.
+     *
+     * @param path     path to the file.
+     * @param imageView Image to be uploaded.
+     * @param count     number of th image in directory.
+     * @return UploadTask that has upload status listeners.
+     */
+    UploadTask uploadImage(String path, ImageView imageView, int count) {
+        String fileName = count + ".png";
+        byte[] file = getImageFromView(imageView);
+        return uploadFile(path, fileName, file);
     }
 
     /**
@@ -150,8 +160,7 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener {
      * @param metadataRef Path to the file containing the metadata.
      * @return Upload Task.
      */
-    private Task<StorageMetadata> updateMetadata(StorageReference metadataRef) {
-        count++;
+    Task<StorageMetadata> updateMetadata(StorageReference metadataRef, int count) {
         StorageMetadata metadata = new StorageMetadata.Builder()
                 .setCustomMetadata("imageCount", String.valueOf(count))
                 .build();
@@ -188,6 +197,16 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener {
     }
 
     /**
+     * Construct a metadata
+     *
+     * @oaram count number of solution in the metadata.
+     * @return Constructed metadata.
+     */
+    StorageMetadata createMetadata(int count) {
+        return new StorageMetadata.Builder().setCustomMetadata("imageCount", String.valueOf(count)).build();
+    }
+
+    /**
      * Upload an exercise solution as an image to Firebase Storage.
      *
      * @param courseID       ID of the course.
@@ -201,39 +220,10 @@ class FirebaseCloud implements FirebaseAuth.AuthStateListener {
 
         Log.i("[UPLOADER]", "Trying to get metadata...");
 
-        metadataRef.getMetadata().addOnSuccessListener(storageMetadata -> {
-            String countStr = storageMetadata.getCustomMetadata("imageCount");
-            count = atoi(countStr);
-
-            updateMetadata(metadataRef).addOnSuccessListener(storageMetadata1 -> {
-                String fileName = count + ".png";
-                byte[] file = getImageFromView(imageView);
-                uploadFile(path, fileName, file);
-            });
-
-
-        }).addOnFailureListener(exception -> {
-            int errorCode = ((StorageException) exception).getErrorCode();
-            if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
-                count = 0;
-                StorageMetadata metadata = new StorageMetadata.Builder()
-                        .setCustomMetadata("imageCount", String.valueOf(count))
-                        .build();
-
-                byte[] empty_file = {0};
-                metadataRef.putBytes(empty_file, metadata).addOnSuccessListener(taskSnapshot ->
-                        updateMetadata(metadataRef).addOnSuccessListener(storageMetadata -> {
-                            String fileName = count + ".png";
-                            byte[] file = getImageFromView(imageView);
-                            uploadFile(path, fileName, file);
-                        }));
-            }
-        });
     }
 
     /**
      * Obligatory function that handles what happens when the user's authentication state is changed.
-     *
      * @param firebaseAuth Firebase Authentication object which contains the authentication data.
      */
     @Override
