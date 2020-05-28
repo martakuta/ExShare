@@ -18,6 +18,7 @@
     <string name="login_failed">"Logowanie nie powiodło się"</string>
     <string name="incorrect_login">"Email lub hasło są nieprawidłowe."</string>
     <string name="sign_out_text">Wyloguj się</string>
+    <string name="confirm_logout">Czy na pewno chcesz się wylogować?</string>
 
     <!--join course-->
     <string name="join_course_title">Dołącz do kursu</string>
@@ -56,5 +57,8 @@
     <string name="name_your_folder">Wpisz nazwę folderu</string>
     <string name="create_folder">Stwórz folder</string>
     <string name="check_tests_label">Wybierz te sprawdziany, które chcesz dodać do nowego folderu:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

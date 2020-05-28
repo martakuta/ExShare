@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_Home_to_YourCourses"
             app:destination="@id/nav_your_courses" />
+        <action
+            android:id="@+id/action_Home_to_LogOut"
+            app:destination="@+id/nav_log_out" />
     </fragment>
 
     <fragment
@@ -135,5 +138,11 @@
             android:id="@+id/action_YourCourses_to_Course"
             app:destination="@id/nav_course" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_log_out"
+        android:name="pl.edu.mimuw.exshare.LogOutFragment"
+        android:label="@string/sign_out_text"
+        tools:layout="@layout/fragment_log_out" />
 
 </navigation>
