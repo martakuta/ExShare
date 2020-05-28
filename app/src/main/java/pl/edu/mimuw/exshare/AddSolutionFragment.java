@@ -3,11 +3,13 @@ package pl.edu.mimuw.exshare;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -32,11 +36,32 @@ public class AddSolutionFragment extends Fragment {
     private String testName;
     private int exerciseNumber;
     private ImageView imageView;
-    ProgressBar progressBar;
-    Button uploadButton;
+    private ProgressBar progressBar;
+    private Button uploadButton;
     private FirebaseCloud firebaseCloud = new FirebaseCloud();
     private static final int SELECT_PICTURE = 1;
+    private AtomicBoolean backTapped = new AtomicBoolean(false);
 
+    private void goBack() {
+
+        if(!backTapped.get()) {
+            NavHostFragment.findNavController(AddSolutionFragment.this)
+                    .popBackStack();
+            backTapped.set(true);
+        }
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                goBack();
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,11 +96,9 @@ public class AddSolutionFragment extends Fragment {
             firebaseCloud.updateMetadata(metadataRef, count).addOnSuccessListener(storageMetadata1 -> {
                 UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, count);
                 uploadTask.addOnSuccessListener(taskSnapshot -> {
-                    NavHostFragment.findNavController(AddSolutionFragment.this)
-                            .popBackStack();
+                    goBack();
                 }).addOnFailureListener(e -> {
-                    NavHostFragment.findNavController(AddSolutionFragment.this)
-                            .popBackStack();
+                    goBack();
                 });
             });
 
@@ -89,11 +112,9 @@ public class AddSolutionFragment extends Fragment {
                     firebaseCloud.updateMetadata(metadataRef, 1).addOnSuccessListener(m -> {
                         UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, 1);
                         uploadTask.addOnSuccessListener(taskSnapshot1 -> {
-                            NavHostFragment.findNavController(AddSolutionFragment.this)
-                                    .popBackStack();
+                            goBack();
                         }).addOnFailureListener(e1 -> {
-                            NavHostFragment.findNavController(AddSolutionFragment.this)
-                                    .popBackStack();
+                            goBack();
                         });
                     });
                 });
