@@ -4,23 +4,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
@@ -63,16 +58,6 @@ public class AddExerciseFragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void getExampleImage() {
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
-            }
-        });
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,8 +82,12 @@ public class AddExerciseFragment extends Fragment {
                 try {
                     imageView.getDrawable();
                     int exerciseNumber = Integer.parseInt(exerciseNumberPlace.getText().toString());
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/content", exerciseNumber + ".png", imageView);
+                    firebaseCloud.uploadContentImage(courseID, courseName, testName, exerciseNumber, imageView);
                     DBAccess.addTestExercise(courseID, testName, exerciseNumber);
+
+                    NavHostFragment.findNavController(AddExerciseFragment.this)
+                            .popBackStack();
+
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Musisz dodać zdjęcie", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();

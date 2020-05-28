@@ -1,21 +1,17 @@
 package pl.edu.mimuw.exshare;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
+import android.util.Base64;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-class DBAccess {
+public class DBAccess {
 
     /**
      * Runnable class for adding user functionality.
@@ -53,6 +49,7 @@ class DBAccess {
 
     /**
      * Creates new thread running @see AddUserRunnable.
+     *
      * @param userId User identifier.
      * @return true if adding succeeded, false otherwise.
      */
@@ -171,7 +168,8 @@ class DBAccess {
 
     /**
      * Assigns user to course using another thread and waits for result.
-     * @param userId User identifier.
+     *
+     * @param userId   User identifier.
      * @param courseId Course identifier.
      * @return -1 in case of failure. 0 in case of non-existent course assignment, 1 on success.
      */
@@ -272,14 +270,14 @@ class DBAccess {
         }
 
         int getResult() {
-            int res =  result;
+            int res = result;
             result = -1;
             return res;
         }
     }
 
     /**
-     * @param userId User identifier.
+     * @param userId     User identifier.
      * @param courseName Created course name.
      * @return Integer with new course identifier. -1 in case of failure.
      */
@@ -326,7 +324,7 @@ class DBAccess {
         }
 
         String getResult() {
-            String res =  result;
+            String res = result;
             result = null;
             return res;
         }
@@ -373,7 +371,7 @@ class DBAccess {
         }
 
         JSONArray getResult() {
-            JSONArray res =  result;
+            JSONArray res = result;
             result = null;
             return res;
         }
@@ -469,7 +467,7 @@ class DBAccess {
         }
 
         JSONArray getResult() {
-            JSONArray res =  result;
+            JSONArray res = result;
             result = null;
             return res;
         }
@@ -529,7 +527,6 @@ class DBAccess {
     }
 
     static boolean addTestExercise(int courseId, String testName, int taskNum) {
-        System.out.println("Jestem tutaj");
         AddTestExerciseRunnable runnable = new AddTestExerciseRunnable(courseId, testName, taskNum);
         Thread t = new Thread(runnable);
         t.start();
@@ -541,37 +538,147 @@ class DBAccess {
         return runnable.getResult();
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    static JSONArray getCourseTests(int courseID) {
-        String[] testNames = new String[5];
-        testNames[0] = "test1";
-        testNames[1] = "test2";
-        testNames[2] = "inny test";
-        testNames[3] = "jeszcze inny test";
-        testNames[4] = "osatatni test";
-        try {
-            return new JSONArray(testNames);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
+    private static class GetCourseFoldersRunnable implements Runnable {
+        int courseId;
+        JSONArray result = null;
+
+        @Override
+        public void run() {
+            System.out.println("http://exshare.herokuapp.com/getCourseFolders/" + courseId);
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getCourseFolders/" + courseId)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public JSONArray getResult() {
+            JSONArray res = result;
+            result = null;
+            return res;
+        }
+
+        public GetCourseFoldersRunnable(int courseId) {
+            this.courseId = courseId;
+            this.result = null;
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    static JSONArray getTestExercises(int courseID, String testName) {
-        Integer[] exerciseNumbers = new Integer[7];
-        exerciseNumbers[0] = 1;
-        exerciseNumbers[1] = 2;
-        exerciseNumbers[2] = 3;
-        exerciseNumbers[3] = 4;
-        exerciseNumbers[4] = 5;
-        exerciseNumbers[5] = 6;
-        exerciseNumbers[6] = 7;
+    static JSONArray getCourseFolders(int courseID) {
+        GetCourseFoldersRunnable runnable = new GetCourseFoldersRunnable(courseID);
+        Thread t = new Thread(runnable);
+        t.start();
         try {
-            return new JSONArray(exerciseNumbers);
-        } catch (JSONException e) {
+            t.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
         }
-    }*/
+        return runnable.getResult();
+    }
+
+    private static class GetFolderTestsRunnable implements Runnable {
+        int courseId;
+        String folderName;
+        JSONArray result = null;
+
+        @Override
+        public void run() {
+            System.out.println("http://exshare.herokuapp.com/getCourseFolders/" + courseId);
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getFolderTests/" + courseId + "/" + folderName)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public JSONArray getResult() {
+            JSONArray res = result;
+            result = null;
+            return res;
+        }
+
+        public GetFolderTestsRunnable(int courseId, String folderName) {
+            this.courseId = courseId;
+            this.folderName = folderName;
+            this.result = null;
+        }
+    }
+
+    static JSONArray getFolderTests(int courseID, String folderName) {
+        GetFolderTestsRunnable runnable = new GetFolderTestsRunnable(courseID, folderName);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    private static class AddFolderRunnable implements Runnable {
+        int courseId;
+        String folderNameAndTests;
+        boolean result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .put(body)
+                    .url("http://exshare.herokuapp.com/addCourseFolder/" + courseId + "/" + folderNameAndTests)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() != 200) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public boolean getResult() {
+            boolean res = result;
+            result = false;
+            return res;
+        }
+
+        public AddFolderRunnable(int courseId, String folderNameAndTests) {
+            this.courseId = courseId;
+            this.folderNameAndTests = folderNameAndTests;
+            result = false;
+        }
+    }
+
+    public static boolean addFolder(int courseID, JSONArray jsonFolderArray) {
+        AddFolderRunnable runnable = new AddFolderRunnable(courseID, Base64.encodeToString(jsonFolderArray.toString().getBytes(), Base64.DEFAULT));
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        return runnable.getResult();
+    }
 }

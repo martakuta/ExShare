@@ -1,41 +1,67 @@
 package pl.edu.mimuw.exshare;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageException;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class AddSolutionFragment extends Fragment {
-    private String userID;
-    private String userName;
     private int courseID;
     private String courseName;
     private String testName;
     private int exerciseNumber;
     private ImageView imageView;
+    private ProgressBar progressBar;
+    private Button uploadButton;
     private FirebaseCloud firebaseCloud = new FirebaseCloud();
     private static final int SELECT_PICTURE = 1;
+    private AtomicBoolean backTapped = new AtomicBoolean(false);
 
+    private void goBack() {
+
+        if(!backTapped.get()) {
+            NavHostFragment.findNavController(AddSolutionFragment.this)
+                    .popBackStack();
+            backTapped.set(true);
+        }
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                goBack();
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,30 +86,66 @@ public class AddSolutionFragment extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 
-    private void setImageView(ImageView imageView, byte[] bytes) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        imageView.setImageBitmap(bitmap);
-    }
+    private void addSolution(ImageView imageView) throws NullPointerException {
+        String path = "courses/" + courseID + "/" + courseName + "/" + testName + "/solution/" + exerciseNumber;
+        StorageReference metadataRef = firebaseCloud.getStorageReference(path, "metadata");
 
-    private void getExampleImage() {
-        Task<byte[]> downloadTask = firebaseCloud.downloadFile("example_directory", "example_task.jpg");
-        downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                setImageView(imageView, bytes);
+        metadataRef.getMetadata().addOnSuccessListener(storageMetadata -> {
+            String countStr = storageMetadata.getCustomMetadata("imageCount");
+            int count = firebaseCloud.atoi(countStr) + 1;
+            firebaseCloud.updateMetadata(metadataRef, count).addOnSuccessListener(storageMetadata1 -> {
+                UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, count);
+                uploadTask.addOnSuccessListener(taskSnapshot -> {
+                    goBack();
+                }).addOnFailureListener(e -> {
+                    goBack();
+                });
+            });
+
+        }).addOnFailureListener(e -> {
+            int errorCode = ((StorageException) e).getErrorCode();
+            if (errorCode == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                StorageMetadata metadata = firebaseCloud.createMetadata(0);
+                byte[] empty_file = {0};
+
+                metadataRef.putBytes(empty_file, metadata).addOnSuccessListener(taskSnapshot -> {
+                    firebaseCloud.updateMetadata(metadataRef, 1).addOnSuccessListener(m -> {
+                        UploadTask uploadTask = firebaseCloud.uploadImage(path, imageView, 1);
+                        uploadTask.addOnSuccessListener(taskSnapshot1 -> {
+                            goBack();
+                        }).addOnFailureListener(e1 -> {
+                            goBack();
+                        });
+                    });
+                });
             }
+
         });
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        uploadButton = view.findViewById(R.id.upload_btn);
+        progressBar = view.findViewById(R.id.upload_progress_bar);
+        progressBar.setVisibility(View.GONE);
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
         exerciseNumber = ((MainActivity) requireActivity()).getPresentExerciseNumber();
         imageView = view.findViewById(R.id.add_solution_image);
+
+        Task<StorageMetadata> countDownload = firebaseCloud.getSolutionsCount(courseID, courseName, testName, exerciseNumber);
+
+        countDownload.addOnSuccessListener(storageMetadata -> {
+            int count = firebaseCloud.pullCount(storageMetadata);
+            handleCount(count);
+        }).addOnFailureListener(e -> {
+            int count = 0;
+            handleCount(count);
+        });
 
         view.findViewById(R.id.add_image_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,17 +155,23 @@ public class AddSolutionFragment extends Fragment {
         });
 
 
-        view.findViewById(R.id.upload_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    imageView.getDrawable();
-                    firebaseCloud.uploadImage("courses/" + courseID + "/" + courseName + "/" + testName + "/solution", exerciseNumber + ".png", imageView);
-                } catch (NullPointerException e) {
-                    Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
+        uploadButton.setOnClickListener(view1 -> {
+            try {
+                uploadButton.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+
+                imageView.getDrawable();
+                addSolution(imageView);
+
+            } catch (NullPointerException e) {
+                Toast.makeText(requireContext(), "Zdjęcie jest puste", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         });
+    }
+
+    private void handleCount(int count) {
+        if (count != 0)
+            Toast.makeText(requireContext(), "zadanie już ma " + count + " rozwiązań", Toast.LENGTH_LONG).show();
     }
 }
