@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
 
         String signOutStr = getIntent().getStringExtra("signOut");
         if(signOutStr != null) {
-            Log.i("[JPUCTAWIK]","JPUUUUUUUUUUUUUUUUUUUUUUUUU");
             boolean signOut = signOutStr.equals("true");
             if(signOut) signOut();
         }
@@ -146,9 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // TODO:: funkcja dla wylogowania się
     public void signOut() {
-        Log.i("[SIGNER]", "TRYING TO SIGN OUT JPUUUUUUUUUUU");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
