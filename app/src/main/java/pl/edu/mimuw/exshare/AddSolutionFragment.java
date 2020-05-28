@@ -11,7 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
@@ -30,6 +32,8 @@ public class AddSolutionFragment extends Fragment {
     private String testName;
     private int exerciseNumber;
     private ImageView imageView;
+    ProgressBar progressBar;
+    Button uploadButton;
     private FirebaseCloud firebaseCloud = new FirebaseCloud();
     private static final int SELECT_PICTURE = 1;
 
@@ -103,6 +107,9 @@ public class AddSolutionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        uploadButton = view.findViewById(R.id.upload_btn);
+        progressBar = view.findViewById(R.id.upload_progress_bar);
+        progressBar.setVisibility(View.GONE);
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
@@ -127,8 +134,11 @@ public class AddSolutionFragment extends Fragment {
         });
 
 
-        view.findViewById(R.id.upload_btn).setOnClickListener(view1 -> {
+        uploadButton.setOnClickListener(view1 -> {
             try {
+                uploadButton.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+
                 imageView.getDrawable();
                 addSolution(imageView);
 
