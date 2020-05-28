@@ -28,7 +28,7 @@ public class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         testName = ((MainActivity) requireActivity()).getPresentTestName();
-        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Sprawdzian " + testName);
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(testName);
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
 

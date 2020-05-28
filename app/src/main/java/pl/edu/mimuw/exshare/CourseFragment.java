@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,7 @@ public class CourseFragment extends Fragment {
         setHasOptionsMenu(true);
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
-        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Kurs " + courseName);
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(courseName);
         return inflater.inflate(R.layout.fragment_course, container, false);
     }
 
@@ -51,6 +52,8 @@ public class CourseFragment extends Fragment {
         }
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
+        TextView courseCode = view.findViewById(R.id.course_code);
+        courseCode.setText("Kod kursu: " + courseID);
 
         JSONArray courseFolders = DBAccess.getCourseFolders(courseID);
         for (int i = 0; i < courseFolders.length(); i++) {

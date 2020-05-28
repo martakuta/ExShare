@@ -30,7 +30,7 @@ public class FolderFragment extends Fragment {
         courseID = ((MainActivity) requireActivity()).getPresentCourseID();
         courseName = DBAccess.getCourseName(courseID);
         folderName = ((MainActivity) requireActivity()).getPresentFolderName();
-        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Folder " + folderName);
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(folderName);
         return inflater.inflate(R.layout.fragment_folder, container, false);
     }
 
