@@ -27,6 +27,11 @@ public class LogOutFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), LoginActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("signOut", "true");
+                intent.putExtras(bundle);
+
                 startActivity(intent);
             }
         });
