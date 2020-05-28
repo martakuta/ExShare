@@ -62,17 +62,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        String signOutStr = getIntent().getStringExtra("signOut");
+        if(signOutStr != null) {
+            boolean signOut = signOutStr.equals("true");
+            if(signOut) signOut();
+        }
+
+
         final TextView name1 = findViewById(R.id.login_hello1_text);
         final TextView name2 = findViewById(R.id.login_hello2_text);
         final TextView incorrectLogin = findViewById(R.id.incorrect_login);
 
         mAuth = FirebaseAuth.getInstance();
-        // Tworzę GoogleSignInOptions Objekt
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        // Tworzę GoogleSignInClient z opcjami w gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         google_sign_in = findViewById(R.id.google_sign_in);
         google_sign_in.setOnClickListener(new View.OnClickListener() {
@@ -140,15 +145,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // TODO:: funkcja dla wylogowania się
     public void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, task -> changeToLoginUI());
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        GoogleSignInClient signInClient = GoogleSignIn.getClient(this, gso);
+        signInClient.signOut();
     }
 
-    private void changeToLoginUI() {
-        setContentView(R.layout.activity_login);
-    }
+
 }
 

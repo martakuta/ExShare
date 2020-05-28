@@ -4,13 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import android.util.Base64;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-class DBAccess {
+public class DBAccess {
 
     /**
      * Runnable class for adding user functionality.
@@ -526,7 +527,6 @@ class DBAccess {
     }
 
     static boolean addTestExercise(int courseId, String testName, int taskNum) {
-        System.out.println("Jestem tutaj");
         AddTestExerciseRunnable runnable = new AddTestExerciseRunnable(courseId, testName, taskNum);
         Thread t = new Thread(runnable);
         t.start();
@@ -538,42 +538,147 @@ class DBAccess {
         return runnable.getResult();
     }
 
+    private static class GetCourseFoldersRunnable implements Runnable {
+        int courseId;
+        JSONArray result = null;
+
+        @Override
+        public void run() {
+            System.out.println("http://exshare.herokuapp.com/getCourseFolders/" + courseId);
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getCourseFolders/" + courseId)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public JSONArray getResult() {
+            JSONArray res = result;
+            result = null;
+            return res;
+        }
+
+        public GetCourseFoldersRunnable(int courseId) {
+            this.courseId = courseId;
+            this.result = null;
+        }
+    }
+
     static JSONArray getCourseFolders(int courseID) {
-        String[] ans = new String[3];
-        ans[0] = "folder 1";
-        ans[1] = "folder 2";
-        ans[2] = "folder 3";
+        GetCourseFoldersRunnable runnable = new GetCourseFoldersRunnable(courseID);
+        Thread t = new Thread(runnable);
+        t.start();
         try {
-            return new JSONArray(ans);
-        } catch (JSONException e) {
+            t.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
+        }
+        return runnable.getResult();
+    }
+
+    private static class GetFolderTestsRunnable implements Runnable {
+        int courseId;
+        String folderName;
+        JSONArray result = null;
+
+        @Override
+        public void run() {
+            System.out.println("http://exshare.herokuapp.com/getCourseFolders/" + courseId);
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getFolderTests/" + courseId + "/" + folderName)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public JSONArray getResult() {
+            JSONArray res = result;
+            result = null;
+            return res;
+        }
+
+        public GetFolderTestsRunnable(int courseId, String folderName) {
+            this.courseId = courseId;
+            this.folderName = folderName;
+            this.result = null;
         }
     }
 
     static JSONArray getFolderTests(int courseID, String folderName) {
-        String[] ans = new String[6];
-        ans[0] = "zielony";
-        ans[1] = "niebieski";
-        ans[2] = "zolty";
-        ans[3] = "czerwony";
-        ans[4] = "czarny";
-        ans[5] = "bialy";
+        GetFolderTestsRunnable runnable = new GetFolderTestsRunnable(courseID, folderName);
+        Thread t = new Thread(runnable);
+        t.start();
         try {
-            return new JSONArray(ans);
-        } catch (JSONException e) {
+            t.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
+        }
+        return runnable.getResult();
+    }
+
+    private static class AddFolderRunnable implements Runnable {
+        int courseId;
+        String folderNameAndTests;
+        boolean result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .put(body)
+                    .url("http://exshare.herokuapp.com/addCourseFolder/" + courseId + "/" + folderNameAndTests)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() != 200) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public boolean getResult() {
+            boolean res = result;
+            result = false;
+            return res;
+        }
+
+        public AddFolderRunnable(int courseId, String folderNameAndTests) {
+            this.courseId = courseId;
+            this.folderNameAndTests = folderNameAndTests;
+            result = false;
         }
     }
 
-    static void addFolder(int courseID, JSONArray jsonFolderArray) {
-        // w pierwszym polu jest nazwa folderu, a w pozostałych nazwy sprawdzianów do niego należących
+    public static boolean addFolder(int courseID, JSONArray jsonFolderArray) {
+        AddFolderRunnable runnable = new AddFolderRunnable(courseID, Base64.encodeToString(jsonFolderArray.toString().getBytes(), Base64.DEFAULT));
+        Thread t = new Thread(runnable);
+        t.start();
         try {
-            System.out.println("Dodano folder o nazwie " + jsonFolderArray.get(0) + " do kursu " + courseID);
-            System.out.println("Jego elementy to (1 to nazwa folderu): " + jsonFolderArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            t.join();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
+        return runnable.getResult();
     }
 }
