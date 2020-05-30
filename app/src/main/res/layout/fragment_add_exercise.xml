@@ -12,59 +12,63 @@
         android:id="@+id/add_content_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginRight="50dp"
         android:src="@drawable/idea"
         app:layout_constraintBottom_toTopOf="@+id/exercise_number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/exercise_number"
         android:layout_width="170dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
         android:autofillHints=""
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/add_exercise_number"
+        android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/add_image_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_content_image"
         tools:ignore="LabelFor,MissingConstraints,TextFields" />
 
     <Button
         android:id="@+id/add_image_btn"
         android:layout_width="170dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="50dp"
-        android:background="@color/myLightBlue"
+        android:layout_marginTop="10dp"
+        android:background="@color/myLightGreen"
         android:padding="5dp"
         android:text="@string/add_content_gallery"
-        android:textColor="@color/myVeryDarkBlue"
+        android:textColor="@color/myDarkBrown"
         app:layout_constraintBottom_toTopOf="@+id/upload_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exercise_number" />
 
     <Button
         android:id="@+id/upload_btn"
         android:layout_width="170dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="100dp"
-        android:background="@color/myLightBlue"
+        android:layout_marginBottom="50dp"
+        android:background="@color/myLightGreen"
         android:padding="5dp"
         android:text="@string/upload_content"
-        android:textColor="@color/myVeryDarkBlue"
+        android:textColor="@color/myDarkBrown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_image_btn"
+        app:layout_constraintVertical_bias="0.179" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

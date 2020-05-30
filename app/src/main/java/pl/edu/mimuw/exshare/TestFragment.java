@@ -1,22 +1,18 @@
 package pl.edu.mimuw.exshare;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,11 +28,10 @@ public class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         testName = ((MainActivity) requireActivity()).getPresentTestName();
-        ((MainActivity) requireActivity()).getSupportActionBar().setTitle("Sprawdzian " + testName);
+        ((MainActivity) requireActivity()).getSupportActionBar().setTitle(testName);
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -54,17 +49,19 @@ public class TestFragment extends Fragment {
         courseName = DBAccess.getCourseName(courseID);
         testName = ((MainActivity) requireActivity()).getPresentTestName();
 
-        JSONArray testExercises = DBAccess.getTestExercises(courseID, testName); // TODO:: getTestExercises które zwraca listę zadań danego sprawdzianu razem z ich numerami
+        JSONArray testExercises = DBAccess.getTestExercises(courseID, testName);
         for (int i = 0; i < testExercises.length(); i++) {
             try {
-                int exerciseNumber = (Integer)testExercises.get(i); // TODO:: exerciseNumber musi być faktycznie integer, nie może być zadania np 1a
+                int exerciseNumber = (Integer) testExercises.get(i);
                 System.out.println("zadanie " + exerciseNumber);
 
                 Button btn = new Button(getActivity());
                 btn.setText(String.valueOf(exerciseNumber));
-                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myYellow));
-                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myVeryDarkBlue));
+                btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightGreen));
+                btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
                 btn.setTextSize(17);
+                btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_note_transp, 0, 0, 0);
+                btn.setPadding(50, 0, 50, 0);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);

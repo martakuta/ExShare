@@ -3,10 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/myLightBlue</item>
-        <item name="colorPrimaryDark">@color/myDarkBlue</item>
-        <item name="colorAccent">@color/myYellow</item>
-        <item name="android:state_checked">@color/myMiddleBlue</item>
+        <item name="colorPrimary">@color/myYellow</item>
+        <item name="colorPrimaryDark">@color/myVeryDarkGreen</item>
+        <item name="colorAccent">@color/myLightGreen</item>
+        <item name="android:state_checked">@color/myMiddleGreen</item>
         <item name="backgroundColor">@color/myWhite</item>
     </style>
 
@@ -17,13 +17,11 @@
 
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/myLightBlue</item>
-        <item name="android:textColorPrimary">@color/myDarkBlue</item> <!--changes app name-->
-        <item name="android:textColorSecondary">@color/myDarkBlue</item> <!--changes icons-->
-        <!--<item name="android:background">@color/myLightBlue</item> changes background close to name-->
-        <item name="actionMenuTextColor">@color/myDarkBlue</item>
-        <!-- <item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
-         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item> -->
+        <item name="colorPrimary">@color/myYellow</item>
+        <item name="android:textColorPrimary">@color/myVeryDarkGreen</item> <!--changes app name-->
+        <item name="android:textColorSecondary">@color/myVeryDarkGreen</item> <!--changes icons-->
+        <!--<item name="android:background">@color/myLightGreen</item> changes background close to name-->
+        <item name="actionMenuTextColor">@color/myVeryDarkGreen</item>
     </style>
 
     <item name="menu_course_group" type="id" />
