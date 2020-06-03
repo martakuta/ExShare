@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -97,7 +98,9 @@ public class ExerciseFragment extends Fragment {
         for (int i = 1; i <= count; i++) {
             try {
                 Task<byte[]> downloadTask = firebaseCloud.downloadSolutionImage(courseID, courseName, testName, exerciseNumber, i);
+                int solutionNumber = i;
                 downloadTask.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSuccess(byte[] bytes) {
 
@@ -106,9 +109,38 @@ public class ExerciseFragment extends Fragment {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 600);
-                        params.setMargins(0, 0, 0, 40);
+                        params.setMargins(0, 100, 0, 0);
                         solutionImg.setLayoutParams(params);
                         linearLayout.addView(solutionImg);
+
+                        Button btn = new Button(getActivity());
+                        btn.setText("Komentarze");
+                        btn.setBackgroundColor(btn.getContext().getResources().getColor(R.color.myLightGreen));
+                        btn.setTextColor(btn.getContext().getResources().getColor(R.color.myDarkBrown));
+                        btn.setTextSize(13);
+                        btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_course_transp, 0, 0, 0);
+                        btn.setContentDescription(String.valueOf(solutionNumber));
+                        btn.setPadding(50, 0, 50, 0);
+                        params = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(100, 10, 100, 0);
+                        btn.setLayoutParams(params);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String testName = btn.getText().toString();
+                                System.out.println("Go to test " + testName);
+                                int solutionNumber = Integer.parseInt((String)btn.getContentDescription());
+
+                                ((MainActivity) requireActivity()).setPresentSolutionNumber(solutionNumber);
+
+                                NavHostFragment.findNavController(ExerciseFragment.this)
+                                        .navigate(R.id.action_Exercise_to_Comments);
+                            }
+                        });
+                        linearLayout.addView(btn);
                     }
                 });
             } catch (Exception e) {
