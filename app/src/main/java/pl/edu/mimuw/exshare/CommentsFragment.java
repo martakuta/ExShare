@@ -65,7 +65,9 @@ public class CommentsFragment extends Fragment {
             public void onClick(View view) {
                 String comment = commentPlace.getText().toString();
                 commentPlace.setText("");
-                DBAccess.addComment(courseID, testName, exerciseNumber, solutionNumber);
+                DBAccess.addComment(courseID, testName, exerciseNumber, solutionNumber, comment);
+
+                System.out.println("Add comment: " + courseID + " " + testName + " " + exerciseNumber + " " + solutionNumber + " " + comment);
 
                 TextView textView = new TextView(getActivity());
                 textView.setText(comment);
