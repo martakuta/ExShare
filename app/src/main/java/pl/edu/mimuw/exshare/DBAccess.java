@@ -681,4 +681,25 @@ public class DBAccess {
         }
         return runnable.getResult();
     }
+
+    public static JSONArray getComments(int courseID, String testName, int exerciseNumber, int solutionNumber) {
+        //when solutionNumber is 0 then return comments to exercise, otherwise return comments to given solution
+        String[] arr = new String[5];
+        arr[0] = "Potwierdzam to rozwiązanie.";
+        arr[1] = "Czy tam nie powinno być >= zamiast >?";
+        arr[2] = "Tak, rzeczywiście, powinno być >=";
+        arr[3] = "Mam tak samo";
+        arr[4] = "Ja też";
+        try {
+            return new JSONArray(arr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void addComment(int courseID, String testName, int exerciseNumber, int solutionNumber) {
+        //when solutionNumber is 0 then return comments to exercise, otherwise return comments to given solution
+
+    }
 }

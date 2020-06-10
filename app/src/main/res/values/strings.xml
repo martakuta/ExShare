@@ -11,6 +11,7 @@
     <string name="exercise_title">Zadanie</string>
     <string name="folder_title">Folder</string>
     <string name="comments">Komentarze</string>
+    <string name="add_comment">Dodaj komentarz...</string>
     <string name="course_code">Kod kursu: </string>
     <string name="course_code_label">Udostępnij go swoim znajomym, aby mogli dołączyć do tego kursu!</string>
 

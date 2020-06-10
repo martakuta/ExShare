@@ -92,6 +92,16 @@ public class ExerciseFragment extends Fragment {
                         .navigate(R.id.action_Exercise_to_AddSolution);
             }
         });
+
+        view.findViewById(R.id.comments).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) requireActivity()).setPresentSolutionNumber(0);
+
+                NavHostFragment.findNavController(ExerciseFragment.this)
+                        .navigate(R.id.action_Exercise_to_Comments);
+            }
+        });
     }
 
     private void showSolutions(int count, LinearLayout linearLayout) {
@@ -108,8 +118,8 @@ public class ExerciseFragment extends Fragment {
                         setImageView(solutionImg, bytes);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
-                                600);
-                        params.setMargins(0, 100, 0, 0);
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(0, 50, 0, 0);
                         solutionImg.setLayoutParams(params);
                         linearLayout.addView(solutionImg);
 
@@ -124,14 +134,12 @@ public class ExerciseFragment extends Fragment {
                         params = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
-                        params.setMargins(100, 10, 100, 0);
+                        params.setMargins(20, 5, 20, 0);
                         btn.setLayoutParams(params);
 
                         btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String testName = btn.getText().toString();
-                                System.out.println("Go to test " + testName);
                                 int solutionNumber = Integer.parseInt((String)btn.getContentDescription());
 
                                 ((MainActivity) requireActivity()).setPresentSolutionNumber(solutionNumber);
