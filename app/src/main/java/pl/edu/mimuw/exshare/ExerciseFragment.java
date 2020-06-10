@@ -140,7 +140,7 @@ public class ExerciseFragment extends Fragment {
                         btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                int solutionNumber = Integer.parseInt((String)btn.getContentDescription());
+                                int solutionNumber = Integer.parseInt((String) btn.getContentDescription());
 
                                 ((MainActivity) requireActivity()).setPresentSolutionNumber(solutionNumber);
 
