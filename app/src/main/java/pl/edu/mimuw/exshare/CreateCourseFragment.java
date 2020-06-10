@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,14 +37,15 @@ public class CreateCourseFragment extends Fragment {
                 String courseName = courseNamePlace.getText().toString();
                 int courseID = DBAccess.getNewCourse(userID, courseName);
                 if (DBAccess.assignUserToCourse(userID, courseID) != 1) {
-                    throw new AssertionError("An error occurred while adding user to the course.");
+                    Toast.makeText(requireContext(), "Nie udało się stowrzyć kursu.", Toast.LENGTH_SHORT).show();
+                } else {
+                    System.out.println("Nazwa kursu:" + courseName + " Numer kursu:" + courseID + "Użytkownik:" + userID);
+
+                    ((MainActivity) requireActivity()).setPresentCourseID(courseID);
+
+                    NavHostFragment.findNavController(CreateCourseFragment.this)
+                            .navigate(R.id.action_CreateCourse_to_Course);
                 }
-                System.out.println("Nazwa kursu:" + courseName + " Numer kursu:" + courseID + "Użytkownik:" + userID);
-
-                ((MainActivity) requireActivity()).setPresentCourseID(courseID);
-
-                NavHostFragment.findNavController(CreateCourseFragment.this)
-                        .navigate(R.id.action_CreateCourse_to_Course);
             }
         });
     }

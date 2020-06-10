@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,22 +65,24 @@ public class CommentsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String comment = commentPlace.getText().toString();
-                commentPlace.setText("");
-                DBAccess.addComment(courseID, testName, exerciseNumber, solutionNumber, comment);
+                if (!DBAccess.addComment(courseID, testName, exerciseNumber, solutionNumber, comment)) {
+                    Toast.makeText(requireContext(), "Nie udało się dodać komentarza.", Toast.LENGTH_SHORT).show();
+                    System.out.println("Add comment: " + courseID + " " + testName + " " + exerciseNumber + " " + solutionNumber + " " + comment);
+                } else {
+                    commentPlace.setText("");
 
-                System.out.println("Add comment: " + courseID + " " + testName + " " + exerciseNumber + " " + solutionNumber + " " + comment);
-
-                TextView textView = new TextView(getActivity());
-                textView.setText(comment);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 40, 0, 0);
-                textView.setPadding(30, 30, 30, 30);
-                textView.setBackgroundColor(textView.getContext().getResources().getColor(R.color.myBackgroundGreen));
-                textView.setTextColor(textView.getContext().getResources().getColor(R.color.myDarkBrown));
-                textView.setLayoutParams(params);
-                linearLayout.addView(textView);
+                    TextView textView = new TextView(getActivity());
+                    textView.setText(comment);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 40, 0, 0);
+                    textView.setPadding(30, 30, 30, 30);
+                    textView.setBackgroundColor(textView.getContext().getResources().getColor(R.color.myBackgroundGreen));
+                    textView.setTextColor(textView.getContext().getResources().getColor(R.color.myDarkBrown));
+                    textView.setLayoutParams(params);
+                    linearLayout.addView(textView);
+                }
             }
         });
     }

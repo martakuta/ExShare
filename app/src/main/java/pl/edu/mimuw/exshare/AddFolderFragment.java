@@ -89,9 +89,12 @@ public class AddFolderFragment extends Fragment {
                     try {
                         JSONArray jsonFolderArray = new JSONArray(folderArray);
                         System.out.println(jsonFolderArray);
-                        DBAccess.addFolder(courseID, jsonFolderArray);
-                        NavHostFragment.findNavController(AddFolderFragment.this)
+                        if (!DBAccess.addFolder(courseID, jsonFolderArray)) {
+                            Toast.makeText(requireContext(), "Nie udało się dodać folderu.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            NavHostFragment.findNavController(AddFolderFragment.this)
                                 .popBackStack();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

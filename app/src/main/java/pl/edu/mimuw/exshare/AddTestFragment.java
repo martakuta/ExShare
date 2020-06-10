@@ -98,10 +98,13 @@ public class AddTestFragment extends Fragment {
                 if (testName.length() == 0) {
                     Toast.makeText(requireContext(), "Musisz nazwać swój sprawdzian", Toast.LENGTH_SHORT).show();
                 } else {
-                    DBAccess.addCourseTest(courseID, testName);
-                    ((MainActivity) requireActivity()).setPresentTestName(testName);
-                    addExerciseBtn.setVisibility(View.VISIBLE);
-                    ((MainActivity) requireActivity()).setTestAlreadyCreated(true);
+                    if (!DBAccess.addCourseTest(courseID, testName)) {
+                        Toast.makeText(requireContext(), "Nie udało się stworzyć sprawdzianu.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ((MainActivity) requireActivity()).setPresentTestName(testName);
+                        addExerciseBtn.setVisibility(View.VISIBLE);
+                        ((MainActivity) requireActivity()).setTestAlreadyCreated(true);
+                    }
                 }
             }
         });

@@ -760,7 +760,7 @@ public class DBAccess {
             RequestBody body = RequestBody.create(null, new byte[]{});
             Request request = new okhttp3.Request.Builder()
                     .put(body)
-                    .url("http://exshare.herokuapp.com/addCourseFolder/" + courseID + "/" + testName + "/" + exerciseNumber + "/" + solutionNumber + "/" + content)
+                    .url("http://exshare.herokuapp.com/addComment/" + courseID + "/" + testName + "/" + exerciseNumber + "/" + solutionNumber + "/" + content)
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
