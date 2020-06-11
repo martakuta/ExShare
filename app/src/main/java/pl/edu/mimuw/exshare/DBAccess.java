@@ -407,11 +407,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -505,11 +501,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -650,11 +642,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -764,11 +752,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
