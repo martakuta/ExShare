@@ -83,10 +83,12 @@ public class AddExerciseFragment extends Fragment {
                     imageView.getDrawable();
                     int exerciseNumber = Integer.parseInt(exerciseNumberPlace.getText().toString());
                     firebaseCloud.uploadContentImage(courseID, courseName, testName, exerciseNumber, imageView);
-                    DBAccess.addTestExercise(courseID, testName, exerciseNumber);
-
-                    NavHostFragment.findNavController(AddExerciseFragment.this)
-                            .popBackStack();
+                    if (!DBAccess.addTestExercise(courseID, testName, exerciseNumber)) {
+                        Toast.makeText(requireContext(), "Nie udało się dodać zadania.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        NavHostFragment.findNavController(AddExerciseFragment.this)
+                                .popBackStack();
+                    }
 
                 } catch (NullPointerException e) {
                     Toast.makeText(requireContext(), "Musisz dodać zdjęcie", Toast.LENGTH_SHORT).show();

@@ -1,10 +1,13 @@
 package pl.edu.mimuw.exshare;
 
+import android.util.Base64;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import android.util.Base64;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -404,11 +407,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -502,11 +501,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -647,11 +642,7 @@ public class DBAccess {
                     .build();
             try {
                 Response response = httpClient.newCall(request).execute();
-                if (response.code() != 200) {
-                    result = true;
-                } else {
-                    result = false;
-                }
+                result = response.code() == 200;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -672,6 +663,120 @@ public class DBAccess {
 
     public static boolean addFolder(int courseID, JSONArray jsonFolderArray) {
         AddFolderRunnable runnable = new AddFolderRunnable(courseID, Base64.encodeToString(jsonFolderArray.toString().getBytes(), Base64.DEFAULT));
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        return runnable.getResult();
+    }
+
+    public static class GetCommentsRunnable implements Runnable {
+        int courseID;
+        String testName;
+        int exerciseNumber;
+        int solutionNumber;
+        JSONArray result = null;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new okhttp3.Request.Builder()
+                    .url("http://exshare.herokuapp.com/getComments/" + courseID + "/" + testName + "/" + exerciseNumber + "/" + solutionNumber)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                if (response.code() == 200) {
+                    result = new JSONArray(response.body().string());
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public JSONArray getResult() {
+            JSONArray res = result;
+            result = null;
+            return res;
+        }
+
+        public GetCommentsRunnable(int courseID, String testName, int exerciseNumber, int solutionNumber) {
+            this.courseID = courseID;
+            this.testName = testName;
+            this.exerciseNumber = exerciseNumber;
+            this.solutionNumber = solutionNumber;
+            this.result = null;
+        }
+    }
+
+    public static JSONArray getComments(int courseID, String testName, int exerciseNumber, int solutionNumber) {
+        GetCommentsRunnable runnable = new GetCommentsRunnable(courseID, testName, exerciseNumber, solutionNumber);
+        Thread t = new Thread(runnable);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> listdata = new ArrayList<>();
+        JSONArray jArray = runnable.getResult();
+        if (jArray != null) {
+            for (int i = 0; i < jArray.length(); i++) {
+                try {
+                    listdata.add(new String(Base64.decode(jArray.getString(i), Base64.DEFAULT)));
+                } catch (JSONException e) {
+                    return null;
+                }
+            }
+        }
+        return new JSONArray(listdata);
+    }
+
+    private static class AddCommentRunnable implements Runnable {
+        int courseID;
+        String testName;
+        int exerciseNumber;
+        int solutionNumber;
+        String content;
+        boolean result;
+
+        @Override
+        public void run() {
+            OkHttpClient httpClient = new OkHttpClient();
+            RequestBody body = RequestBody.create(null, new byte[]{});
+            Request request = new okhttp3.Request.Builder()
+                    .put(body)
+                    .url("http://exshare.herokuapp.com/addComment/" + courseID + "/" + testName + "/" + exerciseNumber + "/" + solutionNumber + "/" + content)
+                    .build();
+            try {
+                Response response = httpClient.newCall(request).execute();
+                result = response.code() == 200;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public boolean getResult() {
+            boolean res = result;
+            result = false;
+            return res;
+        }
+
+        public AddCommentRunnable(int courseID, String testName, int exerciseNumber, int solutionNumber, String content) {
+            this.courseID = courseID;
+            this.testName = testName;
+            this.exerciseNumber = exerciseNumber;
+            this.solutionNumber = solutionNumber;
+            this.content = content;
+            this.result = false;
+        }
+    }
+
+    public static boolean addComment(int courseID, String testName, int exerciseNumber, int solutionNumber, String content) {
+        AddCommentRunnable runnable = new AddCommentRunnable(courseID, testName, exerciseNumber,
+                solutionNumber, Base64.encodeToString(content.getBytes(), Base64.DEFAULT));
         Thread t = new Thread(runnable);
         t.start();
         try {

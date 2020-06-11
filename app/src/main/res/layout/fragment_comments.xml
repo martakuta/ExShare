@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="10dp"
+    tools:context=".CourseFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_comm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="150dp">
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_add_comm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="150dp">
+
+            <EditText
+                android:id="@+id/add_comment_place"
+                android:layout_width="230dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="20dp"
+                android:adjustViewBounds="true"
+                android:gravity="start"
+                android:hint="@string/add_comment" />
+
+            <ImageButton
+                android:id="@+id/add_comment_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:background="@color/myBackgroundWhite"
+                android:gravity="end"
+                android:src="@drawable/ic_send" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

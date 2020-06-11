@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static String presentTestName = "";
     private static String presentFolderName = "";
     private static int presentExerciseNumber = -1;
+    private static int presentSolutionNumber = -1;
     private static boolean testAlreadyCreated = false;
 
     public int getPresentCourseID() {
@@ -67,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void setPresentFolderName(String newName) {
         presentFolderName = newName;
+    }
+
+    public int getPresentSolutionNumber() {
+        return presentSolutionNumber;
+    }
+
+    public void setPresentSolutionNumber(int newNumber) {
+        presentSolutionNumber = newNumber;
     }
 
     @SuppressLint("ResourceType")
